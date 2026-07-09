@@ -11,3 +11,6 @@ SELECT
     -- 5. 文字列を置換する（.com を .co.jp に変更）
     REPLACE(email, '.com', '.co.jp') AS new_email
 FROM employees;
+
+-- GitHubの最新状態を手元に合流させる
+-- git pull origin main --allow-unrelated-histories
