@@ -28,3 +28,4 @@ FROM
     players_tmp
 GROUP BY 
     position;
+--•â‘«
