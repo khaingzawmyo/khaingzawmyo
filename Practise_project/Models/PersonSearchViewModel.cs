@@ -12,12 +12,17 @@ namespace Practise_project.Models
         [Required(ErrorMessage = "SurNameは必須入力です。")]
         public string? SearchSurName { get; set; }
 
+        [Required(ErrorMessage = "SearchLocalLanguageNameは必須入力です。")]
         public string? SearchLocalLanguageName { get; set; }
 
         [Required(ErrorMessage = "Person Typeを選択してください。")]
         public string? SearchPersonType { get; set; }
 
-        [Required(ErrorMessage = "正しいメールアドレスの形式で入力してください。")]
+
+        [Required(ErrorMessage = "メールアドレスを入力してください。")]
+        [EmailAddress(ErrorMessage = "正しいメールアドレスの形式ではありません。")]
+        // 末尾が .com で終わるかチェックする正規表現
+        [RegularExpression(@"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.com$", ErrorMessage = "メールアドレスは '.com' で終わる必要があります。")]
         public string? SearchEmail { get; set; }
 
         public int? SearchAge { get; set; }
