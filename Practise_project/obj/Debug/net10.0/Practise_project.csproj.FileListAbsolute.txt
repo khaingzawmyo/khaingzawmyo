@@ -90,7 +90,6 @@ C:\Worspace\Practise_project\obj\Debug\net10.0\staticwebassets.build.json.cache
 C:\Worspace\Practise_project\obj\Debug\net10.0\staticwebassets.development.json
 C:\Worspace\Practise_project\obj\Debug\net10.0\staticwebassets.build.endpoints.json
 C:\Worspace\Practise_project\obj\Debug\net10.0\swae.build.ex.cache
-C:\Worspace\Practise_project\obj\Debug\net10.0\staticwebassets.upToDateCheck.txt
 C:\Worspace\Practise_project\obj\Debug\net10.0\Practise_project.dll
 C:\Worspace\Practise_project\obj\Debug\net10.0\refint\Practise_project.dll
 C:\Worspace\Practise_project\obj\Debug\net10.0\Practise_project.pdb
@@ -223,3 +222,5 @@ C:\Worspace\Practise_project\bin\Debug\net10.0\runtimes\win-x64\native\Microsoft
 C:\Worspace\Practise_project\bin\Debug\net10.0\runtimes\win-x86\native\Microsoft.Data.SqlClient.SNI.dll
 C:\Worspace\Practise_project\obj\Debug\net10.0\Practise_project.csproj.AssemblyReference.cache
 C:\Worspace\Practise_project\obj\Debug\net10.0\Practise.861FCABA.Up2Date
+C:\Worspace\Practise_project\obj\Debug\net10.0\Practise_project.sourcelink.json
+C:\Worspace\Practise_project\obj\Debug\net10.0\staticwebassets.upToDateCheck.txt

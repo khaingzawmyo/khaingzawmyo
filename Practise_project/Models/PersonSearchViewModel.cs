@@ -17,8 +17,12 @@ namespace Practise_project.Models
         [Required(ErrorMessage = "Person Typeを選択してください。")]
         public string? SearchPersonType { get; set; }
 
-        [EmailAddress(ErrorMessage = "正しいメールアドレスの形式で入力してください。")]
+        [Required(ErrorMessage = "正しいメールアドレスの形式で入力してください。")]
         public string? SearchEmail { get; set; }
+
+        public int? SearchAge { get; set; }
+
+        public bool IsSearched { get; set; } = false;
 
 
         // --- ドロップダウンの選択肢 ---
@@ -38,5 +42,8 @@ namespace Practise_project.Models
         public string? PersonType { get; set; }
         public string? LocalLanguageName { get; set; }
         public string? Email { get; set; }
+
+        public int? Age { get; set; }
+
     }
 }

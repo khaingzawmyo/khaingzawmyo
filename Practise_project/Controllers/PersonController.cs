@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore; // 追加
 using Practise_project.Data; // 追加
 using Practise_project.Models;
+using System.Diagnostics.Eventing.Reader;
 
 namespace Practise_project.Controllers
 {
@@ -16,13 +17,87 @@ namespace Practise_project.Controllers
             _context = context;
         }
 
+        // ==========================================
+        // 1. 編集画面を表示する処理 (GET)
+        // ==========================================
+        [HttpGet]
+        public async Task<IActionResult> Edit(int id)
+        {
+            // データベースから対象のPersonデータを取得
+            var person = await _context.Persons.FindAsync(id);
+            if (person == null)
+            {
+                return NotFound();
+            }
+
+            // Entityから画面用のViewModelへデータを詰め替える
+            var model = new PersonSearchViewModel
+            {
+                SearchGivenName = person.GivenName,
+                SearchSurName = person.SurName,
+                SearchLocalLanguageName = person.LocalLanguageName,
+                SearchPersonType = person.PersonType,
+                SearchEmail = person.Email,
+
+                // ここにAgeを追加！データベースの値を画面用のプロパティに入れます
+                SearchAge = person.Age,
+
+                // ドロップダウンの選択肢を取得
+                PersonTypeOptions = GetPersonTypeOptions()
+            };
+
+            ViewData["PersonId"] = person.Id;
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, PersonSearchViewModel model)
+        {
+            if (!model.SearchAge.HasValue || !ModelState.IsValid)
+            {
+                // 画面に「年齢を入れてください」とエラーを明示する
+                if (!model.SearchAge.HasValue)
+                {
+                    ModelState.AddModelError("SearchAge", "年齢は必須入力です。");
+                }
+
+                // 選択肢を再設定して編集画面に戻す（これで絶対にフリーズしません）
+                model.PersonTypeOptions = GetPersonTypeOptions();
+                ViewData["PersonId"] = id;
+                return View(model);
+            }
+            // データベースから現在のデータを取得
+            var person = await _context.Persons.FindAsync(id);
+                if (person == null)
+                {
+                    return NotFound();
+                }
+
+                // 画面（ViewModel）で入力された値を、データベース用（Entity）に上書きする
+                person.GivenName = model.SearchGivenName!;
+                person.SurName = model.SearchSurName!;
+                person.LocalLanguageName = model.SearchLocalLanguageName;
+                person.PersonType = model.SearchPersonType!;
+                person.Email = model.SearchEmail;
+
+            //ここにAgeを追加！画面で入力された数値をDBのモデルにセットします
+               person.Age = model.SearchAge.Value;
+            
+            // データベースを更新して保存
+            _context.Update(person);
+                await _context.SaveChangesAsync();
+
+                // 保存が終わったら検索画面（一覧）に戻る
+                return RedirectToAction(nameof(Search));
+        }
+
         private List<SelectListItem> GetPersonTypeOptions()
         {
             return new List<SelectListItem>
             {
                 new SelectListItem { Value = "Employee", Text = "Employee" },
-                new SelectListItem { Value = "Manager", Text = "Manager" },
-                new SelectListItem { Value = "Client", Text = "Client" }
+                new SelectListItem { Value = "Customer", Text = "Customer" }
             };
         }
 
@@ -76,6 +151,8 @@ namespace Practise_project.Controllers
                     LocalLanguageName = p.LocalLanguageName,
                     Email = p.Email
                 }).ToListAsync();
+
+            model.IsSearched = true;
 
             return View("Search", model);
         }

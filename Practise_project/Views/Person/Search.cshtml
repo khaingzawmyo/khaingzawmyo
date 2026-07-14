@@ -85,16 +85,6 @@
 
     <div class="table-responsive mt-4">
         <table class="table table-bordered align-middle text-center">
-            <thead class="table-light">
-                <tr>
-                    <th style="width: 80px;"></th>
-                    <th>Given Name</th>
-                    <th>SurName</th>
-                    <th>Person Type</th>
-                    <th>Local Language Name</th>
-                    <th>E-Mail</th>
-                </tr>
-            </thead>
             <tbody>
                 @if (Model != null && Model.SearchResults != null && Model.SearchResults.Any())
                 {
@@ -112,19 +102,19 @@
                         </tr>
                     }
                 }
+                else if (Model.IsSearched)
+                {
+                    @*検索ボタンが押された（IsSearchedがtrue）かつ、データが0件のときだけここを通る *@
+                    <tr>
+                        <td colspan="5" class="ttext-center text-danger fw-bold">該当するデータが見つかりません。</td>
+                    </tr>
+                }
                 else
                 {
-                    @for (int i = 0; i < 5; i++)
-                    {
-                        <tr>
-                            <td><a asp-action="Edit" class="btn btn-link btn-sm p-0 disabled">Edit</a></td>
-                            <td>&nbsp;</td>
-                            <td>&nbsp;</td>
-                            <td>&nbsp;</td>
-                            <td>&nbsp;</td>
-                            <td>&nbsp;</td>
-                        </tr>
-                    }
+                    @*最初に画面を開いた時（まだ検索してない時）は、空行を出すか、何も書かない *@
+                    <tr>
+                        <td colspan="5" class="text-center text-muted">条件を入力して検索してください。</td>
+                    </tr>
                 }
             </tbody>
         </table>
@@ -145,3 +135,21 @@
         </nav>
     </div>
 </div>
+
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" />
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $('#PersonsTable').DataTable({
+        "pageLength": 10,       // 1ページに表示する件数を10件に指定
+        "lengthChange": true,   // ユーザーが「10件」「25件」と表示件数を変更できるようにするか
+        "searching": true,      // テーブル内をキーワードでさらに絞り込める検索窓を出すか
+        "ordering": true,       // 各列のヘッダーをクリックしてソートできるようにするか
+        "info": true,           // 「XX件中 X〜X件を表示」のテキストを出すか
+        "paging": true         // 改ページ（ページネーション）機能を有効にする
+        });
+    });
+</script>
