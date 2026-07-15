@@ -3,16 +3,24 @@
   "WorkspaceRootPath": "C:\\Practise_Workspace\\Practise_project\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{684A6EEF-CB0D-2012-0101-503177999B8C}|Practise_project.csproj|c:\\practise_workspace\\practise_project\\views\\person\\search.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{684A6EEF-CB0D-2012-0101-503177999B8C}|Practise_project.csproj|solutionrelative:views\\person\\search.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{684A6EEF-CB0D-2012-0101-503177999B8C}|Practise_project.csproj|c:\\practise_workspace\\practise_project\\controllers\\personcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{684A6EEF-CB0D-2012-0101-503177999B8C}|Practise_project.csproj|solutionrelative:controllers\\personcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{684A6EEF-CB0D-2012-0101-503177999B8C}|Practise_project.csproj|c:\\practise_workspace\\practise_project\\views\\person\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{684A6EEF-CB0D-2012-0101-503177999B8C}|Practise_project.csproj|solutionrelative:views\\person\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{684A6EEF-CB0D-2012-0101-503177999B8C}|Practise_project.csproj|c:\\practise_workspace\\practise_project\\models\\personsearchviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{684A6EEF-CB0D-2012-0101-503177999B8C}|Practise_project.csproj|solutionrelative:models\\personsearchviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{684A6EEF-CB0D-2012-0101-503177999B8C}|Practise_project.csproj|c:\\practise_workspace\\practise_project\\data\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{684A6EEF-CB0D-2012-0101-503177999B8C}|Practise_project.csproj|solutionrelative:data\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{684A6EEF-CB0D-2012-0101-503177999B8C}|Practise_project.csproj|c:\\practise_workspace\\practise_project\\views\\person\\search.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{684A6EEF-CB0D-2012-0101-503177999B8C}|Practise_project.csproj|solutionrelative:views\\person\\search.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{684A6EEF-CB0D-2012-0101-503177999B8C}|Practise_project.csproj|c:\\practise_workspace\\practise_project\\migrations\\applicationdbcontextmodelsnapshot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -55,10 +63,6 @@
       "RelativeMoniker": "D:0:0:{684A6EEF-CB0D-2012-0101-503177999B8C}|Practise_project.csproj|solutionrelative:properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{684A6EEF-CB0D-2012-0101-503177999B8C}|Practise_project.csproj|c:\\practise_workspace\\practise_project\\views\\person\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{684A6EEF-CB0D-2012-0101-503177999B8C}|Practise_project.csproj|solutionrelative:views\\person\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{684A6EEF-CB0D-2012-0101-503177999B8C}|Practise_project.csproj|c:\\practise_workspace\\practise_project\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{684A6EEF-CB0D-2012-0101-503177999B8C}|Practise_project.csproj|solutionrelative:controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -84,33 +88,32 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "PersonController.cs",
               "DocumentMoniker": "C:\\Practise_Workspace\\Practise_project\\Controllers\\PersonController.cs",
               "RelativeDocumentMoniker": "Controllers\\PersonController.cs",
               "ToolTip": "C:\\Practise_Workspace\\Practise_project\\Controllers\\PersonController.cs",
               "RelativeToolTip": "Controllers\\PersonController.cs",
-              "ViewState": "AgIAAKoAAAAAAAAAAAAswKMAAAAkAAAAAAAAAA==",
+              "ViewState": "AgIAADsAAAAAAAAAAAAgwEoAAABPAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-07-14T05:04:54.68Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "Search.cshtml",
-              "DocumentMoniker": "C:\\Practise_Workspace\\Practise_project\\Views\\Person\\Search.cshtml",
-              "RelativeDocumentMoniker": "Views\\Person\\Search.cshtml",
-              "ToolTip": "C:\\Practise_Workspace\\Practise_project\\Views\\Person\\Search.cshtml",
-              "RelativeToolTip": "Views\\Person\\Search.cshtml",
-              "ViewState": "AgIAAGIAAAAAAAAAAAAswGcAAAARAAAAAAAAAA==",
+              "DocumentIndex": 9,
+              "Title": "_ViewStart.cshtml",
+              "DocumentMoniker": "C:\\Practise_Workspace\\Practise_project\\Views\\_ViewStart.cshtml",
+              "RelativeDocumentMoniker": "Views\\_ViewStart.cshtml",
+              "ToolTip": "C:\\Practise_Workspace\\Practise_project\\Views\\_ViewStart.cshtml",
+              "RelativeToolTip": "Views\\_ViewStart.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-07-13T02:30:43.461Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-15T03:25:08.873Z"
             },
             {
               "$type": "Document",
@@ -120,27 +123,53 @@
               "RelativeDocumentMoniker": "Models\\PersonSearchViewModel.cs",
               "ToolTip": "C:\\Practise_Workspace\\Practise_project\\Models\\PersonSearchViewModel.cs",
               "RelativeToolTip": "Models\\PersonSearchViewModel.cs",
-              "ViewState": "AgIAABQAAAAAAAAAAAAgwB8AAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAsAAAAAAAAAAAAuwBUAAAA1AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-07-13T01:53:42.828Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "_ViewStart.cshtml",
-              "DocumentMoniker": "C:\\Practise_Workspace\\Practise_project\\Views\\_ViewStart.cshtml",
-              "RelativeDocumentMoniker": "Views\\_ViewStart.cshtml",
-              "ToolTip": "C:\\Practise_Workspace\\Practise_project\\Views\\_ViewStart.cshtml",
-              "RelativeToolTip": "Views\\_ViewStart.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "DocumentIndex": 4,
+              "Title": "Search.cshtml",
+              "DocumentMoniker": "C:\\Practise_Workspace\\Practise_project\\Views\\Person\\Search.cshtml",
+              "RelativeDocumentMoniker": "Views\\Person\\Search.cshtml",
+              "ToolTip": "C:\\Practise_Workspace\\Practise_project\\Views\\Person\\Search.cshtml",
+              "RelativeToolTip": "Views\\Person\\Search.cshtml",
+              "ViewState": "AgIAAHEAAAAAAAAAAAAswH0AAAAvAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-07-15T03:25:08.873Z",
+              "WhenOpened": "2026-07-13T02:30:43.461Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Edit.cshtml",
+              "DocumentMoniker": "C:\\Practise_Workspace\\Practise_project\\Views\\Person\\Edit.cshtml",
+              "RelativeDocumentMoniker": "Views\\Person\\Edit.cshtml",
+              "ToolTip": "C:\\Practise_Workspace\\Practise_project\\Views\\Person\\Edit.cshtml",
+              "RelativeToolTip": "Views\\Person\\Edit.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAA8AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-07-14T08:05:10.068Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 3,
+              "Title": "ApplicationDbContext.cs",
+              "DocumentMoniker": "C:\\Practise_Workspace\\Practise_project\\Data\\ApplicationDbContext.cs",
+              "RelativeDocumentMoniker": "Data\\ApplicationDbContext.cs",
+              "ToolTip": "C:\\Practise_Workspace\\Practise_project\\Data\\ApplicationDbContext.cs",
+              "RelativeToolTip": "Data\\ApplicationDbContext.cs",
+              "ViewState": "AgIAABQAAAAAAAAAAADwvxsAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-15T06:46:02.874Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
               "Title": "ApplicationDbContextModelSnapshot.cs",
               "DocumentMoniker": "C:\\Practise_Workspace\\Practise_project\\Migrations\\ApplicationDbContextModelSnapshot.cs",
               "RelativeDocumentMoniker": "Migrations\\ApplicationDbContextModelSnapshot.cs",
@@ -148,12 +177,11 @@
               "RelativeToolTip": "Migrations\\ApplicationDbContextModelSnapshot.cs",
               "ViewState": "AgIAABkAAAAAAAAAAAAQwAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-13T01:46:48.416Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-13T01:46:48.416Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 6,
               "Title": "Privacy.cshtml",
               "DocumentMoniker": "C:\\Practise_Workspace\\Practise_project\\Views\\Home\\Privacy.cshtml",
               "RelativeDocumentMoniker": "Views\\Home\\Privacy.cshtml",
@@ -161,12 +189,11 @@
               "RelativeToolTip": "Views\\Home\\Privacy.cshtml",
               "ViewState": "AgIAAAYAAAAAAAAAAAAAABQAAAAGAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-07-15T03:07:01.014Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-15T03:07:01.014Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 7,
               "Title": "Privacy.cshtml",
               "DocumentMoniker": "C:\\Practise_Workspace\\Practise_project\\Controllers\\Privacy.cshtml",
               "RelativeDocumentMoniker": "Controllers\\Privacy.cshtml",
@@ -174,12 +201,11 @@
               "RelativeToolTip": "Controllers\\Privacy.cshtml",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-07-15T03:22:34.251Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-15T03:22:34.251Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 8,
               "Title": "_Layout.cshtml",
               "DocumentMoniker": "C:\\Practise_Workspace\\Practise_project\\Views\\Shared\\_Layout.cshtml",
               "RelativeDocumentMoniker": "Views\\Shared\\_Layout.cshtml",
@@ -187,12 +213,11 @@
               "RelativeToolTip": "Views\\Shared\\_Layout.cshtml",
               "ViewState": "AgIAABsAAAAAAAAAAAAAACcAAAAxAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-07-15T04:00:12.488Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-15T04:00:12.488Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 11,
               "Title": "appsettings.json",
               "DocumentMoniker": "C:\\Practise_Workspace\\Practise_project\\appsettings.json",
               "RelativeDocumentMoniker": "appsettings.json",
@@ -200,12 +225,11 @@
               "RelativeToolTip": "appsettings.json",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2026-07-13T00:52:36.601Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-13T00:52:36.601Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 10,
               "Title": "_ViewImports.cshtml",
               "DocumentMoniker": "C:\\Practise_Workspace\\Practise_project\\Views\\_ViewImports.cshtml",
               "RelativeDocumentMoniker": "Views\\_ViewImports.cshtml",
@@ -213,12 +237,11 @@
               "RelativeToolTip": "Views\\_ViewImports.cshtml",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAlAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-07-13T02:05:41.295Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-13T02:05:41.295Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 12,
               "Title": "appsettings.Development.json",
               "DocumentMoniker": "C:\\Practise_Workspace\\Practise_project\\appsettings.Development.json",
               "RelativeDocumentMoniker": "appsettings.Development.json",
@@ -226,12 +249,11 @@
               "RelativeToolTip": "appsettings.Development.json",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAwAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2026-07-13T00:52:38.916Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-13T00:52:38.916Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 13,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Practise_Workspace\\Practise_project\\Program.cs",
               "RelativeDocumentMoniker": "Program.cs",
@@ -239,12 +261,11 @@
               "RelativeToolTip": "Program.cs",
               "ViewState": "AgIAAAYAAAAAAAAAAAAAACYAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-13T01:13:55.61Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-13T01:13:55.61Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 14,
               "Title": "launchSettings.json",
               "DocumentMoniker": "C:\\Practise_Workspace\\Practise_project\\Properties\\launchSettings.json",
               "RelativeDocumentMoniker": "Properties\\launchSettings.json",
@@ -252,25 +273,11 @@
               "RelativeToolTip": "Properties\\launchSettings.json",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAEAAABAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2026-07-15T03:09:19.914Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-15T03:09:19.914Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
-              "Title": "Edit.cshtml",
-              "DocumentMoniker": "C:\\Practise_Workspace\\Practise_project\\Views\\Person\\Edit.cshtml",
-              "RelativeDocumentMoniker": "Views\\Person\\Edit.cshtml",
-              "ToolTip": "C:\\Practise_Workspace\\Practise_project\\Views\\Person\\Edit.cshtml",
-              "RelativeToolTip": "Views\\Person\\Edit.cshtml",
-              "ViewState": "AgIAAEQAAAAAAAAAAAAowFgAAAAuAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-07-14T08:05:10.068Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 15,
               "Title": "HomeController.cs",
               "DocumentMoniker": "C:\\Practise_Workspace\\Practise_project\\Controllers\\HomeController.cs",
               "RelativeDocumentMoniker": "Controllers\\HomeController.cs",
@@ -278,12 +285,11 @@
               "RelativeToolTip": "Controllers\\HomeController.cs",
               "ViewState": "AgIAAAMAAAAAAAAAAAAAAAkAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-14T04:54:05.416Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-14T04:54:05.416Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 16,
               "Title": "20260713014558_InitialCreate.cs",
               "DocumentMoniker": "C:\\Practise_Workspace\\Practise_project\\Migrations\\20260713014558_InitialCreate.cs",
               "RelativeDocumentMoniker": "Migrations\\20260713014558_InitialCreate.cs",
@@ -295,7 +301,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 19,
               "Title": "HomeController.cs",
               "DocumentMoniker": "C:\\Worspace\\Practise_project\\Controllers\\Practise_project\\Controllers\\Practise_project\\Controllers\\HomeController.cs",
               "RelativeDocumentMoniker": "..\\..\\Worspace\\Practise_project\\Controllers\\Practise_project\\Controllers\\Practise_project\\Controllers\\HomeController.cs",
@@ -307,7 +313,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 17,
               "Title": "dbo.Persons.sql",
               "DocumentMoniker": "ViewDataWindow_MSSQL__/DESKTOP_I65GOIC_SQLEXPRESS/PersonSearchDb/True/SqlTable/dbo.Persons.sql",
               "ToolTip": "ViewDataWindow_MSSQL__/DESKTOP_I65GOIC_SQLEXPRESS/PersonSearchDb/True/SqlTable/dbo.Persons.sql",
@@ -316,7 +322,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 18,
               "Title": "Practise_project.csproj",
               "DocumentMoniker": "C:\\Practise_Workspace\\Practise_project\\Practise_project.csproj",
               "RelativeDocumentMoniker": "Practise_project.csproj",

@@ -6,30 +6,26 @@ namespace Practise_project.Models
     public class PersonSearchViewModel
     {
         // --- 検索条件 ---
-        [Required(ErrorMessage = "Given Nameは必須入力です。")]
+        //[Required(ErrorMessage = "Given Nameは必須入力です。")]
         [StringLength(50, ErrorMessage = "50文字以内で入力してください。")]
         [RegularExpression(@"^[ -~]*$", ErrorMessage = "GivenNameは半角文字のみで入力してください。")]
-        public string? SearchGivenName { get; set; }
+        public string? SearchGivenName { get; set; } = string.Empty;
 
         [StringLength(50, ErrorMessage = "50文字以内で入力してください。")]
         [RegularExpression(@"^[ -~]*$", ErrorMessage = "SurNameは半角文字のみで入力してください。")]
-        [Required(ErrorMessage = "SurNameは必須入力です。")]
+        //[Required(ErrorMessage = "SurNameは必須入力です。")]
         public string? SearchSurName { get; set; }
-
-        [Required(ErrorMessage = "SearchLocalLanguageNameは必須入力です。")]
+        //[Required(ErrorMessage = "SearchLocalLanguageNameは必須入力です。")]
         public string? SearchLocalLanguageName { get; set; }
 
-        [Required(ErrorMessage = "Person Typeを選択してください。")]
+        //[Required(ErrorMessage = "Person Typeを選択してください。")]
         public string? SearchPersonType { get; set; }
 
-
-        [Required(ErrorMessage = "メールアドレスを入力してください。")]
         [EmailAddress(ErrorMessage = "正しいメールアドレスの形式ではありません。")]
         [RegularExpression(@"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.com$", ErrorMessage = "メールアドレスは '.com' で終わる必要があります。")]
         public string? SearchEmail { get; set; }
 
-        public int? SearchAge { get; set; }
-
+        public int? SearchAge { get; set; } 
         public bool IsSearched { get; set; } = false;
 
 

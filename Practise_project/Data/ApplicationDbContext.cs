@@ -15,13 +15,13 @@ namespace Practise_project.Data
     public class PersonEntitiy
     {
         public int Id { get; set; }
-        public string? GivenName { get; set; } = string.Empty;
-        public string ?SurName { get; set; } = string.Empty;
-        public string? LocalLanguageName { get; set; } = string.Empty;
-        public string ?PersonType { get; set; } = string.Empty;
+        public string? GivenName { get; set; }
+        public string? SurName { get; set; }
+        public string? LocalLanguageName { get; set; } 
+        public string? PersonType { get; set; }
         public string? Email { get; set; }
 
-        public int? Age { get; set; }
+        public int Age { get; set; }
 
     }
 }

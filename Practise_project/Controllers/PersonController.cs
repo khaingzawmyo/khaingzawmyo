@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore; // 追加
 using Practise_project.Data; // 追加
@@ -49,17 +50,37 @@ namespace Practise_project.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
+      //  [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, PersonSearchViewModel model)
         {
-            if (!model.SearchAge.HasValue || !ModelState.IsValid)
+            // 空のままでSaveボタンを押す際エラーを表示される処理
+            if(string.IsNullOrEmpty(model.SearchGivenName))
             {
-                // 画面に「年齢を入れてください」とエラーを明示する
-                if (!model.SearchAge.HasValue)
-                {
-                    ModelState.AddModelError("SearchAge", "年齢は必須入力です。");
-                }
+                ModelState.AddModelError("SearchGivenName", "SearchGivenNameは必須入力です。");
+            }
+            if (string.IsNullOrEmpty(model.SearchSurName))
+            {
+                ModelState.AddModelError("SearchSurName", "SearchSurNameは必須入力です。");
+            }
+            if (string.IsNullOrEmpty(model.SearchLocalLanguageName))
+            {
+                ModelState.AddModelError("SearchLocalLanguageName", "SearchLocalLanguageNameは必須入力です。");
+            }
+            if (string.IsNullOrEmpty(model.SearchPersonType))
+            {
+                ModelState.AddModelError("SearchPersonType", "SearchPersonTypeは必須入力です。");
+            }
+            if (string.IsNullOrEmpty(model.SearchEmail))
+            {
+                ModelState.AddModelError("SearchEmail", "SearchEmailは必須入力です。");
+            }
+            if (!model.SearchAge.HasValue)
+            {
+                ModelState.AddModelError("SearchAge", "年齢は必須入力です。");
+            }
 
+            if (!ModelState.IsValid)
+            {
                 // 選択肢を再設定して編集画面に戻す（これで絶対にフリーズしません）
                 model.PersonTypeOptions = GetPersonTypeOptions();
                 ViewData["PersonId"] = id;
@@ -75,12 +96,12 @@ namespace Practise_project.Controllers
             // 画面（ViewModel）で入力された値を、データベース用（Entity）に上書きする
             person.GivenName = model.SearchGivenName!;
             person.SurName = model.SearchSurName!;
-            person.LocalLanguageName = model.SearchLocalLanguageName;
+            person.LocalLanguageName = model.SearchLocalLanguageName!;
             person.PersonType = model.SearchPersonType!;
-            person.Email = model.SearchEmail;
+            person.Email = model.SearchEmail!;
 
             //ここにAgeを追加！画面で入力された数値をDBのモデルにセットします
-            person.Age = model.SearchAge.Value;
+            person.Age = model.SearchAge!.Value;
 
             // データベースを更新して保存
             _context.Update(person);
@@ -89,6 +110,19 @@ namespace Practise_project.Controllers
             // 保存が終わったら検索画面（一覧）に戻る
             return RedirectToAction(nameof(Search));
         }
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(int id, PersonSearchViewModel model)
+        {
+            var todo = await _context.Persons.FindAsync(id);
+            if (todo != null)
+            {
+                _context.Persons.Remove(todo);
+               await _context.SaveChangesAsync();
+            }
+            return RedirectToAction(nameof(Search));
+        }
+
 
         private List<SelectListItem> GetPersonTypeOptions()
         {
@@ -126,27 +160,27 @@ namespace Practise_project.Controllers
             // 2. 検索条件があったらWHERE句を追加
             if (!string.IsNullOrEmpty(model.SearchGivenName))
             {
-                result = result.Where(p => p.GivenName == model.SearchGivenName);
+                result = result.Where(p => p.GivenName != null && p.GivenName.Contains(model.SearchGivenName));
             }
 
             if (!string.IsNullOrEmpty(model.SearchSurName))
             {
-                result = result.Where(p => p.SurName == model.SearchSurName);
+                result = result.Where(p => p.SurName != null && p.SurName.Contains(model.SearchSurName));
             }
 
             if (!string.IsNullOrEmpty(model.SearchLocalLanguageName))
             {
-                result = result.Where(p => p.LocalLanguageName == model.SearchLocalLanguageName);
+                result = result.Where(p => p.LocalLanguageName != null && p.LocalLanguageName.Contains(model.SearchLocalLanguageName));
             }
 
             if (!string.IsNullOrEmpty(model.SearchPersonType))
             {
-                result = result.Where(p => p.PersonType == model.SearchPersonType);
+                result = result.Where(p => p.PersonType != null && p.PersonType.Contains(model.SearchPersonType));
             }
 
             if (!string.IsNullOrEmpty(model.SearchEmail))
             {
-                result = result.Where(p => p.Email == model.SearchEmail);
+                result = result.Where(p => p.Email != null && p.Email.Contains(model.SearchEmail));
             }
 
             // 3. データベースからデータを非同期で取得し、ViewModelの型に変換（マッピング）する
@@ -192,12 +226,12 @@ namespace Practise_project.Controllers
                 // 画面のViewModelからデータベースのEntityクラス（例: Person）に詰め替えて保存
                 var newPerson = new PersonEntitiy
                 {
-                    GivenName = model.SearchGivenName,
-                    SurName = model.SearchSurName,
-                    LocalLanguageName = model.SearchLocalLanguageName,
-                    PersonType = model.SearchPersonType,
-                    Email = model.SearchEmail,
-                    Age = model.SearchAge
+                    GivenName = model.SearchGivenName!,
+                    SurName = model.SearchSurName!,
+                    LocalLanguageName = model.SearchLocalLanguageName!,
+                    PersonType = model.SearchPersonType!,
+                    Email = model.SearchEmail!,
+                    Age = model.SearchAge ?? 0
                 };
 
                 _context.Persons.Add(newPerson);

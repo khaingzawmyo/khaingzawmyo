@@ -2,7 +2,7 @@
 
 @{
     // ViewData["PersonId"] が 0、もしくは null なら「新規作成モード」、値があれば「編集モード」
-    var isNew = ViewData["PersonId"] == null || (int)ViewData["PersonId"] == 0;
+    var isNew = ViewData["PersonId"] == null || ((int?)ViewData["PersonId"] ?? 0) == 0; ;
 }
 
 <div class="container mt-4 p-4 border border-primary rounded" style="max-width: 1200px; background-color: #fff;">
@@ -28,7 +28,13 @@
 
             @if (!isNew)
             {
-                <a asp-action="Delete" asp-route-id="@ViewData["PersonId"]" class="btn btn-secondary px-4 shadow-sm">Delete</a>
+                @if (!isNew)
+                {
+                    <!-- 削除ボタン（見た目だけここに配置し、form属性で外のフォームと紐付けます） -->
+                    <button type="submit" form="deleteForm" class="btn btn-danger px-4 shadow-sm" onclick="return confirm('本当に削除しますか？');">
+                       Cancel
+                    </button>
+                }
             }
         </div>
 
@@ -40,7 +46,7 @@
                         Person Type<span class="text-danger">*</span>
                     </label>
                     <div class="col-sm-8">
-                        <select asp-for="SearchPersonType" class="form-select border-dark" asp-items="Model.PersonTypeOptions" required>
+                        <select asp-for="SearchPersonType" class="form-select border-dark" asp-items="Model.PersonTypeOptions">
                             <option value=""></option>
                         </select>
                     </div>
@@ -52,7 +58,7 @@
                     Given Name<span class="text-danger">*</span>
                 </label>
                 <div class="col-sm-7">
-                    <input type="text" asp-for="SearchGivenName" class="form-control border-dark" required />
+                    <input type="text" asp-for="SearchGivenName" class="form-control border-dark" />
                 </div>
             </div>
         </div>
@@ -63,7 +69,7 @@
                     SurName<span class="text-danger">*</span>
                 </label>
                 <div class="col-sm-8">
-                    <input type="text" asp-for="SearchSurName" class="form-control border-dark" required />
+                    <input type="text" asp-for="SearchSurName" class="form-control border-dark" />
                 </div>
             </div>
         </div>
@@ -106,4 +112,9 @@
 
     </div>
 </form>
+@if (!isNew)
+{
+    <form id="deleteForm" asp-action="Delete" asp-route-id="@ViewData["PersonId"]" method="post" style="display:none;">
+    </form>
+}
 </div>
