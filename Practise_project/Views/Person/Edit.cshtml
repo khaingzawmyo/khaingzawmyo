@@ -1,10 +1,15 @@
 ﻿@model Practise_project.Models.PersonSearchViewModel
 
+@{
+    // ViewData["PersonId"] が 0、もしくは null なら「新規作成モード」、値があれば「編集モード」
+    var isNew = ViewData["PersonId"] == null || (int)ViewData["PersonId"] == 0;
+}
+
 <div class="container mt-4 p-4 border border-primary rounded" style="max-width: 1200px; background-color: #fff;">
 
     <div class="row mb-3">
         <div class="col-12 text-center border p-2 bg-light">
-            <h4 class="m-0">Person Edit</h4>
+            <h4 class="m-0">@(isNew ? "Person Create" : "Person Edit")</h4>
         </div>
     </div>
 
@@ -15,11 +20,16 @@
         </div>
     }
 
-    <form asp-action="Edit" asp-route-id="@ViewData["PersonId"]" method="post">
+    <form asp-action="@(isNew ? "Create" : "Edit")" asp-route-id="@ViewData["PersonId"]" method="post">
 
         <div class="d-flex justify-content-end gap-2 mb-4">
-            <button type="submit" class="btn btn-primary px-4 shadow-sm">Save</button>
-            <a asp-action="Delete" asp-route-id="@ViewData["PersonId"]" class="btn btn-secondary px-4 shadow-sm">Delete</a>
+            @* <button type="submit" class="btn btn-primary px-4 shadow-sm">Save</button> *@
+            <button type="submit" class="btn btn-primary px-4 shadow-sm">@(isNew ? "Create" : "Save")</button>
+
+            @if (!isNew)
+            {
+                <a asp-action="Delete" asp-route-id="@ViewData["PersonId"]" class="btn btn-secondary px-4 shadow-sm">Delete</a>
+            }
         </div>
 
         <div class="row g-3">

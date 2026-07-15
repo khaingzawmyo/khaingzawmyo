@@ -18,7 +18,7 @@
     <form asp-action="ExecuteSearch" method="get">
         <div class="d-flex justify-content-end gap-2 mb-3">
             <button type="submit" class="btn btn-primary px-4 shadow-sm">Search</button>
-            <a asp-action="Edit" class="btn btn-primary px-4 shadow-sm">New</a>
+            <a asp-action="Create" class="btn btn-primary px-4 shadow-sm">New</a>
         </div>
         <div class="row g-3 mb-4">
             <div class="col-md-4">
@@ -102,7 +102,7 @@
                         </tr>
                     }
                 }
-                else if (Model.IsSearched)
+                else if (Model?.IsSearched == true)
                 {
                     @*検索ボタンが押された（IsSearchedがtrue）かつ、データが0件のときだけここを通る *@
                     <tr>

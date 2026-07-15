@@ -7,8 +7,12 @@ namespace Practise_project.Models
     {
         // --- 検索条件 ---
         [Required(ErrorMessage = "Given Nameは必須入力です。")]
+        [StringLength(50, ErrorMessage = "50文字以内で入力してください。")]
+        [RegularExpression(@"^[ -~]*$", ErrorMessage = "GivenNameは半角文字のみで入力してください。")]
         public string? SearchGivenName { get; set; }
 
+        [StringLength(50, ErrorMessage = "50文字以内で入力してください。")]
+        [RegularExpression(@"^[ -~]*$", ErrorMessage = "SurNameは半角文字のみで入力してください。")]
         [Required(ErrorMessage = "SurNameは必須入力です。")]
         public string? SearchSurName { get; set; }
 

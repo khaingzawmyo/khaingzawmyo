@@ -11,15 +11,13 @@ namespace Practise_project.Controllers
     {
         private readonly ApplicationDbContext _context;
 
-        // コンストラクタでDI（依存性注入）によりDbContextを受け取る
         public PersonController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // ==========================================
-        // 1. 編集画面を表示する処理 (GET)
-        // ==========================================
+        
+        // 編集画面を表示する処理 (GET)
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
@@ -113,6 +111,7 @@ namespace Practise_project.Controllers
 
         [HttpGet]
         public async Task<IActionResult> ExecuteSearch(PersonSearchViewModel model)
+
         {
             model.PersonTypeOptions = GetPersonTypeOptions();
 
@@ -122,36 +121,36 @@ namespace Practise_project.Controllers
             }
 
             // 1. クエリのベースを作成（IQueryable）
-            var query = _context.Persons.AsQueryable();
+            var result = _context.Persons.AsQueryable();
 
             // 2. 検索条件があったらWHERE句を追加
             if (!string.IsNullOrEmpty(model.SearchGivenName))
             {
-                query = query.Where(p => p.GivenName == model.SearchGivenName);
+                result = result.Where(p => p.GivenName == model.SearchGivenName);
             }
 
             if (!string.IsNullOrEmpty(model.SearchSurName))
             {
-                query = query.Where(p => p.SurName == model.SearchSurName);
+                result = result.Where(p => p.SurName == model.SearchSurName);
             }
 
             if (!string.IsNullOrEmpty(model.SearchLocalLanguageName))
             {
-                query = query.Where(p => p.LocalLanguageName == model.SearchLocalLanguageName);
+                result = result.Where(p => p.LocalLanguageName == model.SearchLocalLanguageName);
             }
 
             if (!string.IsNullOrEmpty(model.SearchPersonType))
             {
-                query = query.Where(p => p.PersonType == model.SearchPersonType);
+                result = result.Where(p => p.PersonType == model.SearchPersonType);
             }
 
             if (!string.IsNullOrEmpty(model.SearchEmail))
             {
-                query = query.Where(p => p.Email == model.SearchEmail);
+                result = result.Where(p => p.Email == model.SearchEmail);
             }
 
             // 3. データベースからデータを非同期で取得し、ViewModelの型に変換（マッピング）する
-            model.SearchResults = await query
+            model.SearchResults = await result
                 .Select(p => new PersonSearchResultItem
                 {
                     Id = p.Id,
@@ -165,6 +164,53 @@ namespace Practise_project.Controllers
             model.IsSearched = true;
 
             return View("Search", model);
+        }
+
+        // 1. 新規作成画面を表示する（Get）
+        [HttpGet]
+        public IActionResult Create()
+        {
+            var model = new PersonSearchViewModel
+            {
+                // ドロップダウンリストの選択肢を詰める
+                PersonTypeOptions = GetPersonTypeOptions()
+            };
+
+            // 新規作成であることをViewに伝える
+            ViewData["PersonId"] = 0;
+
+            // 「Edit.cshtml」を呼び出して表示する
+            return View("Edit", model);
+        }
+
+        // 2. 新規作成データをデータベースに保存する（Post）
+        [HttpPost]
+        public async Task<IActionResult> Create(PersonSearchViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                // 画面のViewModelからデータベースのEntityクラス（例: Person）に詰め替えて保存
+                var newPerson = new PersonEntitiy
+                {
+                    GivenName = model.SearchGivenName,
+                    SurName = model.SearchSurName,
+                    LocalLanguageName = model.SearchLocalLanguageName,
+                    PersonType = model.SearchPersonType,
+                    Email = model.SearchEmail,
+                    Age = model.SearchAge
+                };
+
+                _context.Persons.Add(newPerson);
+                await _context.SaveChangesAsync();
+
+                // 保存が終わったら検索一覧画面に戻る
+                return RedirectToAction(nameof(Search));
+            }
+
+            // 入力エラーがある場合は、選択肢を再セットして元の画面に戻す
+            model.PersonTypeOptions = GetPersonTypeOptions();
+            ViewData["PersonId"] = 0;
+            return View("Edit", model);
         }
     }
 }
