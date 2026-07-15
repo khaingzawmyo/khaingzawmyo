@@ -18,8 +18,8 @@
     <form asp-action="Edit" asp-route-id="@ViewData["PersonId"]" method="post">
 
         <div class="d-flex justify-content-end gap-2 mb-4">
-            <button type="submit" class="btn btn-primary px-4 shadow-sm">① Save</button>
-            <a asp-action="Delete" asp-route-id="@ViewData["PersonId"]" class="btn btn-secondary px-4 shadow-sm">② Delete</a>
+            <button type="submit" class="btn btn-primary px-4 shadow-sm">Save</button>
+            <a asp-action="Delete" asp-route-id="@ViewData["PersonId"]" class="btn btn-secondary px-4 shadow-sm">Delete</a>
         </div>
 
         <div class="row g-3">
@@ -31,7 +31,7 @@
                     </label>
                     <div class="col-sm-8">
                         <select asp-for="SearchPersonType" class="form-select border-dark" asp-items="Model.PersonTypeOptions" required>
-                            <option value="">-- Select --</option>
+                            <option value=""></option>
                         </select>
                     </div>
                 </div>

@@ -21,7 +21,6 @@ namespace Practise_project.Models
 
         [Required(ErrorMessage = "メールアドレスを入力してください。")]
         [EmailAddress(ErrorMessage = "正しいメールアドレスの形式ではありません。")]
-        // 末尾が .com で終わるかチェックする正規表現
         [RegularExpression(@"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.com$", ErrorMessage = "メールアドレスは '.com' で終わる必要があります。")]
         public string? SearchEmail { get; set; }
 
@@ -48,7 +47,7 @@ namespace Practise_project.Models
         public string? LocalLanguageName { get; set; }
         public string? Email { get; set; }
 
-        public int? Age { get; set; }
+        //public int? Age { get; set; }
 
     }
 }

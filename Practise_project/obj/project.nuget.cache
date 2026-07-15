@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "gBGG9h9zmtY=",
+  "dgSpecHash": "vRkN0j/Rfic=",
   "success": true,
-  "projectFilePath": "C:\\Worspace\\Practise_project\\Practise_project.csproj",
+  "projectFilePath": "C:\\Practise_Workspace\\Practise_project\\Practise_project.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\khaing.zaw.myo\\.nuget\\packages\\azure.core\\1.47.1\\azure.core.1.47.1.nupkg.sha512",
     "C:\\Users\\khaing.zaw.myo\\.nuget\\packages\\azure.identity\\1.14.2\\azure.identity.1.14.2.nupkg.sha512",

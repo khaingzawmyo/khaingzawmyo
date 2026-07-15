@@ -3096,11 +3096,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Worspace\\Practise_project\\Practise_project.csproj",
+      "projectUniqueName": "C:\\Practise_Workspace\\Practise_project\\Practise_project.csproj",
       "projectName": "Practise_project",
-      "projectPath": "C:\\Worspace\\Practise_project\\Practise_project.csproj",
+      "projectPath": "C:\\Practise_Workspace\\Practise_project\\Practise_project.csproj",
       "packagesPath": "C:\\Users\\khaing.zaw.myo\\.nuget\\packages\\",
-      "outputPath": "C:\\Worspace\\Practise_project\\obj\\",
+      "outputPath": "C:\\Practise_Workspace\\Practise_project\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
