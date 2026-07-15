@@ -98,7 +98,7 @@
               "RelativeDocumentMoniker": "Controllers\\PersonController.cs",
               "ToolTip": "C:\\Practise_Workspace\\Practise_project\\Controllers\\PersonController.cs",
               "RelativeToolTip": "Controllers\\PersonController.cs",
-              "ViewState": "AgIAAOoAAAAAAAAAAAAUwPQAAAA9AAAAAAAAAA==",
+              "ViewState": "AgIAADMAAAAAAAAAAAAYwPEAAAANAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-07-14T05:04:54.68Z",
               "EditorCaption": ""
@@ -125,8 +125,7 @@
               "RelativeToolTip": "Models\\PersonSearchViewModel.cs",
               "ViewState": "AgIAAAsAAAAAAAAAAAAuwBUAAAA1AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-13T01:53:42.828Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-13T01:53:42.828Z"
             },
             {
               "$type": "Document",
@@ -138,8 +137,7 @@
               "RelativeToolTip": "Views\\Person\\Search.cshtml",
               "ViewState": "AgIAAHEAAAAAAAAAAAAswH0AAAAvAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-07-13T02:30:43.461Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-13T02:30:43.461Z"
             },
             {
               "$type": "Document",
@@ -151,8 +149,7 @@
               "RelativeToolTip": "Views\\Person\\Edit.cshtml",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAA8AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-07-14T08:05:10.068Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-14T08:05:10.068Z"
             },
             {
               "$type": "Document",
@@ -164,8 +161,7 @@
               "RelativeToolTip": "Data\\ApplicationDbContext.cs",
               "ViewState": "AgIAABQAAAAAAAAAAADwvxsAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-15T06:46:02.874Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-15T06:46:02.874Z"
             },
             {
               "$type": "Document",
