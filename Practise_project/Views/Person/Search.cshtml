@@ -20,6 +20,7 @@
             <button type="submit" class="btn btn-primary px-4 shadow-sm">Search</button>
             <a asp-action="Create" class="btn btn-primary px-4 shadow-sm">New</a>
         </div>
+
         <div class="row g-3 mb-4">
             <div class="col-md-4">
                 <div class="row h-100 align-items-end">
@@ -54,7 +55,6 @@
                 </div>
             </div>
 
-
             <div class="col-md-4 mt-4">
                 <div class="row align-items-center">
                     <label asp-for="SearchPersonType" class="col-sm-4 col-form-label text-nowrap">
@@ -84,11 +84,23 @@
     </form>
 
     <div class="table-responsive mt-4">
-        <table class="table table-bordered align-middle text-center">
-            <tbody>
-                @if (Model != null && Model.SearchResults != null && Model.SearchResults.Any())
-                {
-                    foreach (var item in Model.SearchResults)
+        <table id="PersonsTable" class="table table-bordered align-middle text-center">
+
+            @if (Model != null && Model.SearchResults != null && Model.SearchResults.Any())
+            {
+                <thead class="table-primary">
+                    <tr>
+                        <th style="width: 80px;"></th>
+                        <th>GivenName</th>
+                        <th>SurName</th>
+                        <th>PersonType</th>
+                        <th>LocalLanguageName</th>
+                        <th>Email</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach (var item in Model.SearchResults)
                     {
                         <tr>
                             <td>
@@ -101,22 +113,29 @@
                             <td>@item.Email</td>
                         </tr>
                     }
-                }
-                else if (Model?.IsSearched == true)
-                {
-                    @*検索ボタンが押された（IsSearchedがtrue）かつ、データが0件のときだけここを通る *@
+                </tbody>
+            }
+            else if (Model?.IsSearched == true)
+            {
+                <tbody>
                     <tr>
-                        <td colspan="5" class="ttext-center text-danger fw-bold">該当するデータが見つかりません。</td>
+                        <td colspan="6" class="text-center text-danger fw-bold">
+                            該当するデータが見つかりません。
+                        </td>
                     </tr>
-                }
-                else
-                {
-                    @*最初に画面を開いた時（まだ検索してない時）ここ表示されます *@
+                </tbody>
+            }
+            else
+            {
+                <tbody>
                     <tr>
-                        <td colspan="5" class="text-center text-muted">条件を入力して検索してください。</td>
+                        <td colspan="6" class="text-center text-muted">
+                            条件を入力して検索してください。
+                        </td>
                     </tr>
-                }
-            </tbody>
+                </tbody>
+            }
+
         </table>
     </div>
 
@@ -134,6 +153,7 @@
             </ul>
         </nav>
     </div>
+
 </div>
 
 <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" />
@@ -142,14 +162,14 @@
 <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
 
 <script>
-    $(document).ready(function () {
+    $(document).ready(function() {
         $('#PersonsTable').DataTable({
-        "pageLength": 10,       // 1ページに表示する件数を10件に指定
-        "lengthChange": true,   // ユーザーが「10件」「25件」と表示件数を変更できるようにするか
-        "searching": true,      // テーブル内をキーワードでさらに絞り込める検索窓を出すか
-        "ordering": true,       // 各列のヘッダーをクリックしてソートできるようにするか
-        "info": true,           // 「XX件中 X〜X件を表示」のテキストを出すか
-        "paging": true         // 改ページ（ページネーション）機能を有効にする
+            "pageLength": 10,
+            "lengthChange": true,
+            "searching": true,
+            "ordering": true,
+            "info": true,
+            "paging": true
         });
     });
 </script>
