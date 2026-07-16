@@ -37,9 +37,12 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2026 - khaingzawmyo - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+    <footer class="border-top footer text-muted" style="line-height: normal; padding: 8px 0;>
+        <div class="container" style="overflow: hidden; white-space: nowrap;">
+            <!-- marqueeタグを使うと簡単にスライド（ループ）させることができます -->
+            <marquee scrollamount="5" behavior="scroll" direction="left">
+                Original 2026 khaingzawmyo <a asp-area="" asp-controller="Home" asp-action="Privacy">Myanmar</a>
+            </marquee>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

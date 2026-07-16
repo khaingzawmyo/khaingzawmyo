@@ -92,7 +92,7 @@ namespace Practise_project.Controllers
                     InvoiceId = i.Invoice_id,
                     InvoiceNo = i.Invoice_no,
                     //Personテーブルと結合しているので、作成者の名前やタイプが取れる
-                    CreatePersonName = i.CreatePerson != null ? i.CreatePerson.GivenName : "Unknown",
+                    CreatePersonName = i.CreatePerson != null ? i.CreatePerson.GivenName+" "+i.CreatePerson.SurName : "Unknown",
                     CreatePersonType = i.CreatePerson != null ? i.CreatePerson.PersonType : "Employee", // 画像の再現用
                     EntryDate = i.Entry_date,
                     Remarks = i.Remarks
@@ -110,7 +110,7 @@ namespace Practise_project.Controllers
             {
                 Value = p.Id.ToString(),
                 // 表示名はファーストネームなどを指定（要件に合わせて変更してください）
-                Text = p.GivenName
+                Text = p.GivenName+" "+p.SurName
             }).ToList();
         }
     }
