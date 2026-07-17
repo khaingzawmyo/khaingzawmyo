@@ -55,11 +55,16 @@ namespace Practise_project.Data
         public int Invoice_item_id { get; set; }
         public int Invoice_id { get; set; }
         public string? Charge_description { get; set; }
-        public int Create_person_id { get; set; }
+       // public int Create_person_id { get; set; }
         public decimal? Revenue_amount { get; set; }
         public decimal? Cost_amount { get; set; }
         public DateTime Entry_date { get; set; }
         public DateTime? Update_date { get; set; }
         public short Rowver { get; set; }
+        //[ForeignKey("Create_person_id")]
+        //public virtual PersonEntitiy? CreatePerson { get; set; }
+       // public string? Customer_name { get; set; }
+       // public string? Remarks { get; set; }
+       // public decimal Total_amount { get; set; }
     }
 }

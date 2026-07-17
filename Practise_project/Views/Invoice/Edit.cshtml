@@ -1,0 +1,180 @@
+﻿@model Practise_project.Models.InvoiceSearchViewModel
+
+@{
+    ViewBag.Title = "Invoice Edit";
+}
+
+<div class="container my-4" style="max-width: 1000px; border: 1px solid #007bff; padding: 20px; border-radius: 4px; background-color: #fff;">
+
+    <!-- 画面タイトル -->
+    <div class="text-center mb-4" style="border: 1px solid #ccc; padding: 8px; background-color: #fcfcfc;">
+        <h4 class="m-0" style="font-weight: normal; font-size: 1.1rem;">Invoice Edit</h4>
+    </div>
+
+    <!-- ◯ Html.BeginForm から <form asp-action="..."> への書き換え -->
+    <form asp-controller="Invoice" asp-action="Edit" method="post" id="invoiceForm">
+        @Html.AntiForgeryToken()
+
+        <!-- 右上アクションボタン（BACKボタンもここにまとめました） -->
+        <div class="d-flex justify-content-end gap-3 mb-4">
+            <div class="d-flex align-items-center gap-1">
+                <button type="submit" name="action" value="save" class="btn btn-primary px-4 shadow-sm" style="background-color: #3b82f6; border: none;">Save</button>
+            </div>
+            <div class="d-flex align-items-center gap-1">
+                <button type="submit" name="action" value="void" class="btn btn-secondary px-4 shadow-sm" style="background-color: #4b5563; border: none;">Void</button>
+            </div>
+            <div class="d-flex align-items-center gap-1">
+                <!-- 安全に一覧に戻るBACKボタン -->
+                <a asp-controller="Invoice" asp-action="Search" class="btn btn-outline-secondary px-4 shadow-sm">BACK</a>
+            </div>
+        </div>
+
+        <!-- 入力フォームエリア -->
+        <div class="row g-3 mb-4">
+            <!-- 左カラム -->
+            <div class="col-md-6">
+                <!-- ① Invoice No -->
+                <div class="row mb-3 align-items-center">
+                    <label class="col-sm-4 col-form-label text-end fw-bold" style="font-size: 0.9rem;">
+                        Invoice No<span class="text-danger">*</span>
+                    </label>
+                    <div class="col-sm-8 position-relative">
+                        @Html.TextBoxFor(m => m.SearchInvoiceNo, new { @class = "form-control custom-input", placeholder = "①" })
+                        @Html.ValidationMessageFor(m => m.SearchInvoiceNo, "", new { @class = "text-danger small" })
+                    </div>
+                </div>
+
+                <!-- ③ Customer Name -->
+                <div class="row mb-3 align-items-center">
+                    <label class="col-sm-4 col-form-label text-end fw-bold" style="font-size: 0.9rem;">
+                        Customer Name<span class="text-danger">*</span>
+                    </label>
+                    <div class="col-sm-8">
+                        @Html.TextBoxFor(m => m.Customer_name, new { @class = "form-control custom-input", placeholder = "③" })
+                        @Html.ValidationMessageFor(m => m.Customer_name, "", new { @class = "text-danger small" })
+                    </div>
+                </div>
+
+                <!-- ⑤ Total Amount (読み取り専用・グレー背景) -->
+                <div class="row mb-3 align-items-center">
+                    <label class="col-sm-4 col-form-label text-end fw-bold" style="font-size: 0.9rem;">
+                        Total Amount<span class="text-danger">*</span>
+                    </label>
+                    <div class="col-sm-8">
+                        @Html.TextBoxFor(m => m.Total_amount, new { @class = "form-control custom-input bg-secondary text-white", @readonly = "readonly", placeholder = "⑤" })
+                    </div>
+                </div>
+            </div>
+
+            <!-- 右カラム -->
+            <div class="col-md-6">
+                <!-- ② Create Person -->
+                <div class="row mb-3 align-items-center">
+                    <label class="col-sm-4 col-form-label text-end fw-bold" style="font-size: 0.9rem;">
+                        Create Person<span class="text-danger">*</span>
+                    </label>
+                    <div class="col-sm-8">
+                        @Html.DropDownListFor(m => m.SearchCreatePersonId, new SelectList(Model.CreatePersonOptions, "Value", "Text"), "▼", new { @class = "form-select custom-input" })
+                        @Html.ValidationMessageFor(m => m.SearchCreatePersonId, "", new { @class = "text-danger small" })
+                    </div>
+                </div>
+
+                <!-- ④ Remarks -->
+                <div class="row mb-3 align-items-center">
+                    <label class="col-sm-4 col-form-label text-end fw-bold" style="font-size: 0.9rem;">
+                        Remarks
+                    </label>
+                    <div class="col-sm-8">
+                        @Html.TextBoxFor(m => m.Remarks, new { @class = "form-control custom-input", placeholder = "④" })
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 明細テーブル ＆ 行操作ボタン -->
+        <div class="row align-items-start">
+            <!-- テーブル -->
+            <div class="col-md-9 col-10">
+                <div class="table-responsive">
+                    <table class="table table-bordered text-center align-middle m-0" id="detailsTable">
+                        <thead class="table-light">
+                            <tr>
+                                <th style="width: 40%; font-size: 0.9rem;">Charge Desc.</th>
+                                <th style="width: 30%; font-size: 0.9rem;">Revenue Amount</th>
+                                <th style="width: 30%; font-size: 0.9rem;">Cost Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for (int i = 0; i < 5; i++)
+                            {
+                                <tr>
+                                    <td>
+                                        <input type="text" name="Details[@i].ChargeDesc" class="form-control form-control-sm border-0 bg-transparent text-center" />
+                                    </td>
+                                    <td>
+                                        <input type="number" name="Details[@i].RevenueAmount" class="form-control form-control-sm border-0 bg-transparent text-center revenue-input" />
+                                    </td>
+                                    <td>
+                                        <input type="number" name="Details[@i].CostAmount" class="form-control form-control-sm border-0 bg-transparent text-center" />
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- ＋・ー ボタン -->
+            <div class="col-md-1 col-2 d-flex flex-column gap-2" style="max-width: 60px;">
+                <button type="button" class="btn btn-outline-dark fw-bold py-2 shadow-sm" id="addRowBtn" style="font-size: 1.2rem; line-height: 1;">＋</button>
+                <button type="button" class="btn btn-outline-dark fw-bold py-2 shadow-sm" id="removeRowBtn" style="font-size: 1.2rem; line-height: 1;">－</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<!-- スタイル調整 -->
+<style>
+    .custom-input {
+        border: 1px solid #000 !important;
+        border-radius: 0px !important;
+        height: 34px;
+        padding: 4px 8px;
+    }
+
+    #detailsTable, #detailsTable th, #detailsTable td {
+        border: 1px solid #000 !important;
+    }
+
+        #detailsTable th {
+            background-color: #fff !important;
+            font-weight: normal;
+        }
+
+    .btn {
+        border-radius: 4px;
+    }
+</style>
+
+@section Scripts {
+    <script>
+        document.getElementById('addRowBtn').addEventListener('click', function() {
+            var tableBody = document.querySelector('#detailsTable tbody');
+            var rowCount = tableBody.rows.length;
+            var newRow = tableBody.insertRow();
+
+            newRow.innerHTML = `
+                        <td><input type="text" name="Details[${rowCount}].ChargeDesc" class="form-control form-control-sm border-0 bg-transparent text-center" /></td>
+                        <td><input type="number" name="Details[${rowCount}].RevenueAmount" class="form-control form-control-sm border-0 bg-transparent text-center revenue-input" /></td>
+                        <td><input type="number" name="Details[${rowCount}].CostAmount" class="form-control form-control-sm border-0 bg-transparent text-center" /></td>
+                    `;
+        });
+
+        document.getElementById('removeRowBtn').addEventListener('click', function() {
+            var tableBody = document.querySelector('#detailsTable tbody');
+            if (tableBody.rows.length > 1) {
+                tableBody.deleteRow(-1);
+            }
+        });
+    </script>
+}

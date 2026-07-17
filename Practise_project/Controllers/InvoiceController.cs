@@ -1,10 +1,12 @@
-﻿//using Microsoft.AspNetCore.Http.HttpResults;
+﻿using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore; // 追加
+using Microsoft.IdentityModel.Tokens;
 using Practise_project.Data; // 追加
 using Practise_project.Models;
-//using System.Diagnostics.Eventing.Reader;
+using System.Diagnostics.Eventing.Reader;
+using System.Reflection.Metadata.Ecma335;
 
 namespace Practise_project.Controllers
 {
@@ -112,6 +114,184 @@ namespace Practise_project.Controllers
                 // 表示名はファーストネームなどを指定（要件に合わせて変更してください）
                 Text = p.GivenName+" "+p.SurName
             }).ToList();
+        }// 編集画面を表示する処理 (GET)
+        [HttpGet]
+        public async Task<IActionResult> Edit(int id)
+        {
+            // データベースから対象のPersonデータを取得
+            var invoice = await _context.Invoice.FindAsync(id);
+            if (invoice == null)
+            {
+                return NotFound();
+            }
+
+            // Entityから画面用のViewModelへデータを詰め替える
+            var model = new InvoiceSearchViewModel
+            {
+                SearchInvoiceNo = invoice.Invoice_no,
+                SearchCreatePersonId = invoice.Create_person_id,
+                Customer_name = invoice.Customer_name,
+                Remarks = invoice.Remarks,
+                Total_amount = invoice.Total_amount,
+
+                // ここにAgeを追加！データベースの値を画面用のプロパティに入れます
+            };
+            await PopulateCreatePersonOptionsAsync(model);
+
+            ViewData["InvoiceItemId"] = invoice.Invoice_id;
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, InvoiceSearchViewModel model, string action)
+        {
+            // -----------------------------------------------------------------
+            // 1. 【Voidボタン（削除）】が押された場合の処理
+            // -----------------------------------------------------------------
+            if (action == "void")
+            {
+                // 子（明細）データがあれば取得して削除
+                var invoiceItem = await _context.Invoice_item
+                    .FirstOrDefaultAsync(item => item.Invoice_id == id);
+                if (invoiceItem != null)
+                {
+                    _context.Invoice_item.Remove(invoiceItem);
+                }
+
+                // 親データを取得して削除
+                var invoice = await _context.Invoice.FindAsync(id);
+                if (invoice != null)
+                {
+                    _context.Invoice.Remove(invoice);
+                }
+
+                // 削除を確定
+                await _context.SaveChangesAsync();
+
+                // 検索一覧画面に戻る
+                return RedirectToAction(nameof(Search));
+            }
+
+            // -----------------------------------------------------------------
+            // 2. 【Saveボタン（保存）】が押された場合の通常の処理
+            // -----------------------------------------------------------------
+
+            // 入力チェック
+            if (string.IsNullOrEmpty(model.SearchInvoiceNo))
+            {
+                ModelState.AddModelError("SearchInvoiceNo", "SearchInvoiceNoは必須入力です。");
+            }
+            if (model.SearchCreatePersonId == null)
+            {
+                ModelState.AddModelError("SearchCreatePersonId", "CreatePersonは必須入力です。");
+            }
+            if (string.IsNullOrEmpty(model.Customer_name))
+            {
+                ModelState.AddModelError("Customer_name", "Customer_nameは必須入力です。");
+            }
+            if (model.Total_amount == 0)
+            {
+                ModelState.AddModelError("Total_amount", "Total_amountは必須入力です。");
+            }
+
+            //if (ModelState.IsValid)
+            //{
+            //    return View(model);
+            //}
+
+            // データベースから現在の親データを取得
+            var currentInvoice = await _context.Invoice.FindAsync(id);
+            if (currentInvoice == null)
+            {
+                return NotFound();
+            }
+
+            // データベースから現在の子（明細）データを取得
+            var currentInvoiceItem = await _context.Invoice_item
+                .FirstOrDefaultAsync(item => item.Invoice_id == id);
+
+            bool isNewItem = false;
+            if (currentInvoiceItem == null)
+            {
+                // 💡 データベースが自動採番してくれないので、C#側で現在の最大IDを取得して +1 する
+                int maxId = await _context.Invoice_item.AnyAsync()
+                    ? await _context.Invoice_item.MaxAsync(item => item.Invoice_item_id)
+                    : 0;
+                currentInvoiceItem = new InvoiceItemEntitiy
+                {
+                    Invoice_item_id = maxId + 1,
+                    Invoice_id = id,
+                    Entry_date = DateTime.UtcNow, // 初回保存日時（UTC）
+                    Rowver = 1
+                };
+                isNewItem = true;
+            }
+
+            // 親テーブル（dbo.invoice）への値の上書き
+            currentInvoice.Invoice_no = model.SearchInvoiceNo;
+            currentInvoice.Create_person_id = model.SearchCreatePersonId!.Value;
+            currentInvoice.Customer_name = model.Customer_name;
+            currentInvoice.Total_amount = model.Total_amount;
+            currentInvoice.Remarks = model.Remarks;
+
+            if (currentInvoice.Entry_date == default)
+            {
+                currentInvoice.Entry_date = DateTime.UtcNow;
+            }
+            currentInvoice.Update_date = DateTime.UtcNow; // 二度目以降の保存日時（UTC）
+           
+
+            // 子テーブル（dbo.invoice_item）への値の上書き
+            if (model.Details != null && model.Details.Count > 0)
+            {
+                currentInvoiceItem.Charge_description = model.Details[0].ChargeDesc ?? "";
+                currentInvoiceItem.Revenue_amount = model.Details[0].RevenueAmount;
+                currentInvoiceItem.Cost_amount = model.Details[0].CostAmount;
+                currentInvoiceItem.Rowver = (short)(currentInvoiceItem.Rowver + 1); // 保存するたびに+1
+            }
+            else
+            {
+                currentInvoiceItem.Charge_description = "";
+                currentInvoiceItem.Revenue_amount = 0;
+                currentInvoiceItem.Cost_amount = 0;
+            }
+
+            if (!isNewItem)
+            {
+                currentInvoiceItem.Update_date = DateTime.UtcNow; // 二度目移行の保存日時（UTC）
+                currentInvoiceItem.Rowver = (short)(currentInvoiceItem.Rowver + 1); // 保存するたびに+1
+            }
+
+            // データベースへの保存を実行
+            try
+            {
+                _context.Update(currentInvoice);
+
+                if (isNewItem)
+                {
+                    _context.Invoice_item.Add(currentInvoiceItem);
+                }
+                else
+                {
+                    _context.Update(currentInvoiceItem);
+                }
+
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!_context.Invoice.Any(e => e.Invoice_id == id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return RedirectToAction(nameof(Search));
         }
     }
 }

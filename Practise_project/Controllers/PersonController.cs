@@ -50,7 +50,6 @@ namespace Practise_project.Controllers
         }
 
         [HttpPost]
-      //  [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, PersonSearchViewModel model)
         {
             // 空のままでSaveボタンを押す際エラーを表示される処理
