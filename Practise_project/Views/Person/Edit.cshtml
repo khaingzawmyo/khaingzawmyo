@@ -28,13 +28,10 @@
 
             @if (!isNew)
             {
-                @if (!isNew)
-                {
-                    <!-- 削除ボタン（見た目だけここに配置し、form属性で外のフォームと紐付けます） -->
-                    <button type="submit" form="deleteForm" class="btn btn-danger px-4 shadow-sm" onclick="return confirm('本当に削除しますか？');">
-                       Cancel
-                    </button>
-                }
+                <!-- 削除ボタン（見た目だけここに配置し、form属性で外のフォームと紐付けます） -->
+                <button type="submit" form="deleteForm" class="btn btn-danger px-4 shadow-sm" onclick="return confirm('本当に削除しますか？');">
+                    Cancel
+                </button>
             }
         </div>
 
@@ -111,7 +108,7 @@
         <div class="col-md-8"></div>
 
     </div>
-</form>
+    </form>
 @if (!isNew)
 {
     <form id="deleteForm" asp-action="Delete" asp-route-id="@ViewData["PersonId"]" method="post" style="display:none;">

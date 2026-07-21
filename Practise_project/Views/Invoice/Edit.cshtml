@@ -1,32 +1,40 @@
 ﻿@model Practise_project.Models.InvoiceSearchViewModel
 
 @{
-    ViewBag.Title = "Invoice Edit";
+    // ViewData["InvoiceItemId"] が 0、もしくは null なら「新規作成モード」、値があれば「編集モード」
+    var isNew = ViewData["InvoiceItemId"] == null || ((int?)ViewData["InvoiceItemId"] ?? 0) == 0;
 }
 
-<div class="container my-4" style="max-width: 1000px; border: 1px solid #007bff; padding: 20px; border-radius: 4px; background-color: #fff;">
+<div class="container mt-4 p-4 border border-primary rounded" style="max-width: 1200px; background-color: #fff;">
 
-    <!-- 画面タイトル -->
-    <div class="text-center mb-4" style="border: 1px solid #ccc; padding: 8px; background-color: #fcfcfc;">
-        <h4 class="m-0" style="font-weight: normal; font-size: 1.1rem;">Invoice Edit</h4>
+    <div class="row mb-3">
+        <div class="col-12 text-center border p-2 bg-light">
+            <h4 class="m-0">@(isNew ? "Invoice Create" : "Invoice Edit")</h4>
+        </div>
     </div>
 
-    <!-- ◯ Html.BeginForm から <form asp-action="..."> への書き換え -->
-    <form asp-controller="Invoice" asp-action="Edit" method="post" id="invoiceForm">
-        @Html.AntiForgeryToken()
+    @if (!ViewData.ModelState.IsValid)
+    {
+        <div asp-validation-summary="All" class="alert alert-danger text-white bg-danger mb-4" role="alert" style="border-radius: 0;">
+            エラーメッセージを表示
+        </div>
+    }
 
-        <!-- 右上アクションボタン（BACKボタンもここにまとめました） -->
-        <div class="d-flex justify-content-end gap-3 mb-4">
-            <div class="d-flex align-items-center gap-1">
-                <button type="submit" name="action" value="save" class="btn btn-primary px-4 shadow-sm" style="background-color: #3b82f6; border: none;">Save</button>
-            </div>
-            <div class="d-flex align-items-center gap-1">
-                <button type="submit" name="action" value="void" class="btn btn-secondary px-4 shadow-sm" style="background-color: #4b5563; border: none;">Void</button>
-            </div>
-            <div class="d-flex align-items-center gap-1">
-                <!-- 安全に一覧に戻るBACKボタン -->
-                <a asp-controller="Invoice" asp-action="Search" class="btn btn-outline-secondary px-4 shadow-sm">BACK</a>
-            </div>
+    <form asp-action="@(isNew ? "Create" : "Edit")" asp-route-id="@ViewData["InvoiceItemId"]" method="post">
+
+        <!-- 右上アクションボタンエリア -->
+        <div class="d-flex justify-content-end gap-2 mb-4">
+            <button type="submit" name="action" value="save" class="btn btn-primary px-4 shadow-sm">
+                @(isNew ? "Create" : "Save")
+            </button>
+
+            @if (!isNew)
+            {
+                <button type="submit" name="action" value="void" class="btn btn-danger px-4 shadow-sm" onclick="return confirm('本当に削除しますか？');">
+                    Void
+                </button>
+            }
+
         </div>
 
         <!-- 入力フォームエリア -->
@@ -35,33 +43,34 @@
             <div class="col-md-6">
                 <!-- ① Invoice No -->
                 <div class="row mb-3 align-items-center">
-                    <label class="col-sm-4 col-form-label text-end fw-bold" style="font-size: 0.9rem;">
+                    <label asp-for="SearchInvoiceNo" class="col-sm-4 col-form-label text-end fw-bold" style="font-size: 0.9rem;">
                         Invoice No<span class="text-danger">*</span>
                     </label>
                     <div class="col-sm-8 position-relative">
-                        @Html.TextBoxFor(m => m.SearchInvoiceNo, new { @class = "form-control custom-input", placeholder = "①" })
-                        @Html.ValidationMessageFor(m => m.SearchInvoiceNo, "", new { @class = "text-danger small" })
+                        <input asp-for="SearchInvoiceNo" class="form-control custom-input" />
+                        <span asp-validation-for="SearchInvoiceNo" class="text-danger small d-block"></span>
                     </div>
                 </div>
 
                 <!-- ③ Customer Name -->
                 <div class="row mb-3 align-items-center">
-                    <label class="col-sm-4 col-form-label text-end fw-bold" style="font-size: 0.9rem;">
+                    <label asp-for="Customer_name" class="col-sm-4 col-form-label text-end fw-bold" style="font-size: 0.9rem;">
                         Customer Name<span class="text-danger">*</span>
                     </label>
                     <div class="col-sm-8">
-                        @Html.TextBoxFor(m => m.Customer_name, new { @class = "form-control custom-input", placeholder = "③" })
-                        @Html.ValidationMessageFor(m => m.Customer_name, "", new { @class = "text-danger small" })
+                        <input asp-for="Customer_name" class="form-control custom-input" />
+                        <span asp-validation-for="Customer_name" class="text-danger small d-block"></span>
                     </div>
                 </div>
 
-                <!-- ⑤ Total Amount (読み取り専用・グレー背景) -->
+                <!-- ⑤ Total Amount (読み取り専用) -->
                 <div class="row mb-3 align-items-center">
-                    <label class="col-sm-4 col-form-label text-end fw-bold" style="font-size: 0.9rem;">
+                    <label asp-for="Total_amount" class="col-sm-4 col-form-label text-end fw-bold" style="font-size: 0.9rem;">
                         Total Amount<span class="text-danger">*</span>
                     </label>
                     <div class="col-sm-8">
-                        @Html.TextBoxFor(m => m.Total_amount, new { @class = "form-control custom-input bg-secondary text-white", @readonly = "readonly", placeholder = "⑤" })
+                        <input asp-for="Total_amount" class="form-control custom-input bg-secondary text-white" readonly />
+                        <span asp-validation-for="Total_amount" class="text-danger small d-block"></span>
                     </div>
                 </div>
             </div>
@@ -70,22 +79,25 @@
             <div class="col-md-6">
                 <!-- ② Create Person -->
                 <div class="row mb-3 align-items-center">
-                    <label class="col-sm-4 col-form-label text-end fw-bold" style="font-size: 0.9rem;">
+                    <label asp-for="SearchCreatePersonId" class="col-sm-4 col-form-label text-end fw-bold" style="font-size: 0.9rem;">
                         Create Person<span class="text-danger">*</span>
                     </label>
                     <div class="col-sm-8">
-                        @Html.DropDownListFor(m => m.SearchCreatePersonId, new SelectList(Model.CreatePersonOptions, "Value", "Text"), "▼", new { @class = "form-select custom-input" })
-                        @Html.ValidationMessageFor(m => m.SearchCreatePersonId, "", new { @class = "text-danger small" })
+                        <select asp-for="SearchCreatePersonId" asp-items="Model.CreatePersonOptions" class="form-select custom-input">
+                            <option value="">▼</option>
+                        </select>
+                        <span asp-validation-for="SearchCreatePersonId" class="text-danger small d-block"></span>
                     </div>
                 </div>
 
                 <!-- ④ Remarks -->
                 <div class="row mb-3 align-items-center">
-                    <label class="col-sm-4 col-form-label text-end fw-bold" style="font-size: 0.9rem;">
+                    <label asp-for="Remarks" class="col-sm-4 col-form-label text-end fw-bold" style="font-size: 0.9rem;">
                         Remarks
                     </label>
                     <div class="col-sm-8">
-                        @Html.TextBoxFor(m => m.Remarks, new { @class = "form-control custom-input", placeholder = "④" })
+                        <input asp-for="Remarks" class="form-control custom-input" />
+                        <span asp-validation-for="Remarks" class="text-danger small d-block"></span>
                     </div>
                 </div>
             </div>
@@ -105,17 +117,20 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @for (int i = 0; i < 5; i++)
+                            @for (int i = 0; i < Model.Details.Count; i++)
                             {
                                 <tr>
                                     <td>
-                                        <input type="text" name="Details[@i].ChargeDesc" class="form-control form-control-sm border-0 bg-transparent text-center" />
+                                        <input asp-for="Details[i].ChargeDesc" class="form-control" />
+                                        <span asp-validation-for="Details[i].ChargeDesc" class="text-danger small d-block"></span>
                                     </td>
                                     <td>
-                                        <input type="number" name="Details[@i].RevenueAmount" class="form-control form-control-sm border-0 bg-transparent text-center revenue-input" />
+                                        <input asp-for="Details[i].RevenueAmount" type="number" class="form-control" />
+                                        <span asp-validation-for="Details[i].RevenueAmount" class="text-danger small d-block"></span>
                                     </td>
                                     <td>
-                                        <input type="number" name="Details[@i].CostAmount" class="form-control form-control-sm border-0 bg-transparent text-center" />
+                                        <input asp-for="Details[i].CostAmount" type="number" class="form-control" />
+                                        <span asp-validation-for="Details[i].CostAmount" class="text-danger small d-block"></span>
                                     </td>
                                 </tr>
                             }
@@ -131,6 +146,10 @@
             </div>
         </div>
     </form>
+</div>
+<div class="d-flex justify-content-end">
+    <a asp-controller="Invoice" asp-action="Search" class="btn btn-outline-secondary px-4 shadow-sm">BACK</a>
+    <a asp-controller="Home" asp-action="Privacy" class="btn btn-success px-4 shadow-sm">Home</a>
 </div>
 
 <!-- スタイル調整 -->

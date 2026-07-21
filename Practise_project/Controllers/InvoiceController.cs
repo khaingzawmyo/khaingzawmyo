@@ -118,14 +118,17 @@ namespace Practise_project.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
+            // Include で明細 (Invoice_item) も一緒にまとめて取得！
+            var invoice = await _context.Invoice
+        .Include(i => i.InvoiceItems)
+        .FirstOrDefaultAsync(i => i.Invoice_id == id);
             // データベースから対象のPersonデータを取得
-            var invoice = await _context.Invoice.FindAsync(id);
             if (invoice == null)
             {
                 return NotFound();
             }
-
-            // Entityから画面用のViewModelへデータを詰め替える
+     
+            // Entiyから画面用のViewModelへデータを詰め替える
             var model = new InvoiceSearchViewModel
             {
                 SearchInvoiceNo = invoice.Invoice_no,
@@ -133,12 +136,17 @@ namespace Practise_project.Controllers
                 Customer_name = invoice.Customer_name,
                 Remarks = invoice.Remarks,
                 Total_amount = invoice.Total_amount,
-
                 // ここにAgeを追加！データベースの値を画面用のプロパティに入れます
+                Details = invoice.InvoiceItems.Select(item => new InvoiceItemInputModel
+                {
+                    ChargeDesc = item.Charge_description,
+                    RevenueAmount = item.Revenue_amount ?? 0, // decimal? のため null 対策
+                    CostAmount = item.Cost_amount ?? 0
+                }).ToList()
             };
-            await PopulateCreatePersonOptionsAsync(model);
 
-            ViewData["InvoiceItemId"] = invoice.Invoice_id;
+            await PopulateCreatePersonOptionsAsync(model);
+            ViewData["InvoiceItemId"] = invoice.Invoice_id; //Invoice_idを取得しています。
             return View(model);
         }
 
@@ -148,7 +156,7 @@ namespace Practise_project.Controllers
         {
             // -----------------------------------------------------------------
             // 1. 【Voidボタン（削除）】が押された場合の処理
-            // -----------------------------------------------------------------
+            //// -----------------------------------------------------------------
             if (action == "void")
             {
                 // 子（明細）データがあれば取得して削除
@@ -171,6 +179,7 @@ namespace Practise_project.Controllers
 
                 // 検索一覧画面に戻る
                 return RedirectToAction(nameof(Search));
+
             }
 
             // -----------------------------------------------------------------
@@ -178,6 +187,7 @@ namespace Practise_project.Controllers
             // -----------------------------------------------------------------
 
             // 入力チェック
+            ViewData["InvoiceItemId"] = id;
             if (string.IsNullOrEmpty(model.SearchInvoiceNo))
             {
                 ModelState.AddModelError("SearchInvoiceNo", "SearchInvoiceNoは必須入力です。");
@@ -190,15 +200,23 @@ namespace Practise_project.Controllers
             {
                 ModelState.AddModelError("Customer_name", "Customer_nameは必須入力です。");
             }
-            if (model.Total_amount == 0)
+            //if (model.Total_amount == 0)
+            //{
+            //    ModelState.AddModelError("Total_amount", "Total_amountは必須入力です。");
+            //}
+            if (string.IsNullOrEmpty(model.Remarks))
             {
-                ModelState.AddModelError("Total_amount", "Total_amountは必須入力です。");
+                ModelState.AddModelError("Remarks", "Remarksは必須入力です。");
             }
 
-            //if (ModelState.IsValid)
-            //{
-            //    return View(model);
-            //}
+            if (!ModelState.IsValid)
+            {
+                // ドロップダウンの選択肢を再構築（これを行わないと画面のドロップダウンが空になります）
+                await PopulateCreatePersonOptionsAsync(model);
+
+                // エラーメッセージ付きで元の入力画面を再表示
+                return View(model);
+            }
 
             // データベースから現在の親データを取得
             var currentInvoice = await _context.Invoice.FindAsync(id);
@@ -214,7 +232,7 @@ namespace Practise_project.Controllers
             bool isNewItem = false;
             if (currentInvoiceItem == null)
             {
-                // 💡 データベースが自動採番してくれないので、C#側で現在の最大IDを取得して +1 する
+                // データベースが自動採番してくれないので、C#側で現在の最大IDを取得して +1 する
                 int maxId = await _context.Invoice_item.AnyAsync()
                     ? await _context.Invoice_item.MaxAsync(item => item.Invoice_item_id)
                     : 0;
@@ -222,7 +240,7 @@ namespace Practise_project.Controllers
                 {
                     Invoice_item_id = maxId + 1,
                     Invoice_id = id,
-                    Entry_date = DateTime.UtcNow, // 初回保存日時（UTC）
+                    Entry_date = DateTime.Now, 
                     Rowver = 1
                 };
                 isNewItem = true;
@@ -237,9 +255,9 @@ namespace Practise_project.Controllers
 
             if (currentInvoice.Entry_date == default)
             {
-                currentInvoice.Entry_date = DateTime.UtcNow;
+                currentInvoice.Entry_date = DateTime.Now;
             }
-            currentInvoice.Update_date = DateTime.UtcNow; // 二度目以降の保存日時（UTC）
+            currentInvoice.Update_date = DateTime.Now; 
            
 
             // 子テーブル（dbo.invoice_item）への値の上書き
@@ -259,7 +277,7 @@ namespace Practise_project.Controllers
 
             if (!isNewItem)
             {
-                currentInvoiceItem.Update_date = DateTime.UtcNow; // 二度目移行の保存日時（UTC）
+                currentInvoiceItem.Update_date = DateTime.Now; // 二度目移行の保存日時（UTC）
                 currentInvoiceItem.Rowver = (short)(currentInvoiceItem.Rowver + 1); // 保存するたびに+1
             }
 
@@ -290,7 +308,160 @@ namespace Practise_project.Controllers
                     throw;
                 }
             }
+            return RedirectToAction(nameof(Search));
+        }
+        [HttpGet]
+        public async Task<IActionResult> Create()
+        {
+            var model = new InvoiceSearchViewModel(); 
+                // ドロップダウンの選択肢を再構築（これを行わないと画面のドロップダウンが空になります）
+            await PopulateCreatePersonOptionsAsync(model);
+            
+            // 「Edit.cshtml」を呼び出して表示する
+            return View("Edit", model);
+        }
+        // 2. 新規作成データをデータベースに保存する（Post）
+        //[HttpPost]
+        //public async Task<IActionResult> Create(InvoiceSearchViewModel model)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        // 画面のViewModelからデータベースのEntityクラス（例: Person）に詰め替えて保存
+        //        var newInvoice = new InvoiceEntity
+        //        {
+        //            Invoice_no = model.SearchInvoiceNo!,
+        //            Create_person_id = model.SearchCreatePersonId!.Value,
+        //            Customer_name = model.Customer_name!,
+        //            Remarks = model.Remarks!,
+        //            //Total_amount = model.Total_amount!,
+        //        };
+        //        if (newInvoice.Entry_date == default)
+        //        {
+        //            newInvoice.Entry_date = DateTime.Now;
+        //        }
+        //        newInvoice.Update_date = DateTime.Now;
 
+        //        _context.Invoice.Add(newInvoice);
+        //        await _context.SaveChangesAsync();
+
+        //        // 保存が終わったら検索一覧画面に戻る
+        //        return RedirectToAction(nameof(Search));
+        //    }
+
+        //    // 入力エラーがある場合は、選択肢を再セットして元の画面に戻す
+        //    await PopulateCreatePersonOptionsAsync(model);
+        //    ViewData["InvoiceItemId"] = 0;
+        //    return View("Edit", model);
+        //}
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(InvoiceSearchViewModel model)
+        {
+            // 1. バリデーションチェック
+            if (string.IsNullOrEmpty(model.SearchInvoiceNo))
+            {
+                ModelState.AddModelError("SearchInvoiceNo", "SearchInvoiceNoは必須入力です。");
+            }
+            if (model.SearchCreatePersonId == null)
+            {
+                ModelState.AddModelError("SearchCreatePersonId", "CreatePersonは必須入力です。");
+            }
+            if (string.IsNullOrEmpty(model.Customer_name))
+            {
+                ModelState.AddModelError("Customer_name", "Customer_nameは必須入力です。");
+            }
+            var detail = model.Details?.FirstOrDefault();
+
+            if (detail == null || string.IsNullOrEmpty(detail.ChargeDesc))
+                ModelState.AddModelError("Details[0].ChargeDesc", "ChargeDescは必須です。");
+
+            if (detail == null || detail.RevenueAmount == 0)
+                ModelState.AddModelError("Details[0].RevenueAmount", "RevenueAmountは必須です。");
+
+            if (detail == null || detail.CostAmount == 0)
+                ModelState.AddModelError("Details[0].CostAmount", "CostAmountは必須です。");
+            //if (model.Total_amount == 0)
+            //{
+            //    ModelState.AddModelError("Total_amount", "Total_amountは必須入力です。");
+            //}
+            if (string.IsNullOrEmpty(model.Remarks))
+            {
+                ModelState.AddModelError("Remarks", "Remarksは必須入力です。");
+            }
+
+            if (!ModelState.IsValid)
+            {
+                // エラー時はドロップダウンの選択肢を再構築して画面を再表示
+                await PopulateCreatePersonOptionsAsync(model);
+                return View("Edit", model);
+            }
+
+            // 2. 親テーブル（Invoice）の新規ID採番（※DB側で自動採番(IDENTITY)でない場合）
+            int maxInvoiceId = await _context.Invoice.AnyAsync()
+                ? await _context.Invoice.MaxAsync(i => i.Invoice_id)
+                : 0;
+            int newInvoiceId = maxInvoiceId + 1;
+
+            // 3. 親エンティティの生成
+            var newInvoice = new InvoiceEntity // ※型名は実際のEntityクラス名に合わせて調整してください
+            {
+                Invoice_id = newInvoiceId,
+                Invoice_no = model.SearchInvoiceNo,
+                Create_person_id = model.SearchCreatePersonId!.Value,
+                Customer_name = model.Customer_name,
+                Total_amount = model.Total_amount,
+                Remarks = model.Remarks,
+                Entry_date = DateTime.Now,
+                // Update_date は新規の場合、DateTime.Now を入れるか NULL（nullableの場合）にするか設計に合わせて変更してください
+                Update_date = DateTime.Now,
+                Rowver = 1
+            };
+
+            // 4. 子テーブル（InvoiceItem）の新規ID採番
+            int maxItemId = await _context.Invoice_item.AnyAsync()
+                ? await _context.Invoice_item.MaxAsync(item => item.Invoice_item_id)
+                : 0;
+
+            // 5. 子エンティティの生成
+            var newInvoiceItem = new InvoiceItemEntitiy
+            {
+                Invoice_item_id = maxItemId + 1,
+                Invoice_id = newInvoiceId,
+                Entry_date = DateTime.Now,
+                Update_date = DateTime.Now,
+                Rowver = 1
+            };
+
+            if (model.Details != null && model.Details.Count > 0)
+            {
+                newInvoiceItem.Charge_description = model.Details[0].ChargeDesc ?? "";
+                newInvoiceItem.Revenue_amount = model.Details[0].RevenueAmount;
+                newInvoiceItem.Cost_amount = model.Details[0].CostAmount;
+            }
+            else
+            {
+                newInvoiceItem.Charge_description = "";
+                newInvoiceItem.Revenue_amount = 0;
+                newInvoiceItem.Cost_amount = 0;
+            }
+
+            // 6. データベースへ追加・保存
+            try
+            {
+                _context.Invoice.Add(newInvoice);
+                _context.Invoice_item.Add(newInvoiceItem);
+
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                // 必要に応じてログ出力やエラーハンドリング
+                ModelState.AddModelError("", "保存中にエラーが発生しました。");
+                await PopulateCreatePersonOptionsAsync(model);
+                return View("Edit", model);
+            }
+
+            // 保存完了後は検索画面へリダイレクト
             return RedirectToAction(nameof(Search));
         }
     }

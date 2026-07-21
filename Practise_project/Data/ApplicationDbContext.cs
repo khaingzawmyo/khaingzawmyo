@@ -45,8 +45,11 @@ namespace Practise_project.Data
         public bool Void_flag { get; set; }
         public DateTime Entry_date { get; set; }
         public DateTime? Update_date { get; set; }
+        public short Rowver { get; set; }
         [ForeignKey("Create_person_id")]
         public virtual PersonEntitiy? CreatePerson { get; set; }
+        // ▼ これを1行追加します！（外部キー Invoice_id を元に自動で紐づきます）
+        public virtual ICollection<InvoiceItemEntitiy> InvoiceItems { get; set; } = new List<InvoiceItemEntitiy>();
     }
 
     public class InvoiceItemEntitiy
@@ -61,10 +64,13 @@ namespace Practise_project.Data
         public DateTime Entry_date { get; set; }
         public DateTime? Update_date { get; set; }
         public short Rowver { get; set; }
+        //追加：親（InvoiceEntity）へのナビゲーションプロパティ
+        [ForeignKey("Invoice_id")]
+        public virtual InvoiceEntity? Invoice { get; set; }
         //[ForeignKey("Create_person_id")]
         //public virtual PersonEntitiy? CreatePerson { get; set; }
-       // public string? Customer_name { get; set; }
-       // public string? Remarks { get; set; }
-       // public decimal Total_amount { get; set; }
+        // public string? Customer_name { get; set; }
+        // public string? Remarks { get; set; }
+        // public decimal Total_amount { get; set; }
     }
 }
