@@ -46,6 +46,7 @@ namespace Practise_project.Models
         public string? PersonType { get; set; }
         public string? LocalLanguageName { get; set; }
         public string? Email { get; set; }
+        public DateTime EntryDate { get; set; }
 
         //public int? Age { get; set; }
 

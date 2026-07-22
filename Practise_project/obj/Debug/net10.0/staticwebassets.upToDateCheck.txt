@@ -62,6 +62,7 @@ wwwroot\lib\jquery\dist\jquery.slim.js
 wwwroot\lib\jquery\dist\jquery.slim.min.js
 wwwroot\lib\jquery\dist\jquery.slim.min.map
 wwwroot\lib\jquery\LICENSE.txt
+wwwroot\pp.png
 wwwroot\sample.png
 C:\Practise_Workspace\Practise_project\wwwroot\favicon.ico
 C:\Practise_Workspace\Practise_project\wwwroot\css\site.css

@@ -453,7 +453,7 @@ namespace Practise_project.Controllers
 
                 await _context.SaveChangesAsync();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 // 必要に応じてログ出力やエラーハンドリング
                 ModelState.AddModelError("", "保存中にエラーが発生しました。");

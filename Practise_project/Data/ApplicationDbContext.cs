@@ -30,6 +30,8 @@ namespace Practise_project.Data
         public string? Email { get; set; }
 
         public int Age { get; set; }
+        public DateTime Entry_date { get; set; }
+        public DateTime? Update_date { get; set; }
 
     }
 
