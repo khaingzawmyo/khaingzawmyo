@@ -109,6 +109,9 @@
 
     </div>
     </form>
+<div class="d-flex justify-content-end">
+    <a asp-controller="Home" asp-action="Privacy" class="btn btn-success px-4 shadow-sm">Home</a>
+</div>
 @if (!isNew)
 {
     <form id="deleteForm" asp-action="Delete" asp-route-id="@ViewData["PersonId"]" method="post" style="display:none;">
