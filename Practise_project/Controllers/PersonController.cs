@@ -98,6 +98,7 @@ namespace Practise_project.Controllers
             person.LocalLanguageName = model.SearchLocalLanguageName!;
             person.PersonType = model.SearchPersonType!;
             person.Email = model.SearchEmail!;
+            person.Update_date = Convert.ToDateTime(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
 
             //ここにAgeを追加！画面で入力された数値をDBのモデルにセットします
             person.Age = model.SearchAge!.Value;
@@ -230,7 +231,8 @@ namespace Practise_project.Controllers
                     LocalLanguageName = model.SearchLocalLanguageName!,
                     PersonType = model.SearchPersonType!,
                     Email = model.SearchEmail!,
-                    Age = model.SearchAge ?? 0
+                    Age = model.SearchAge ?? 0,
+                    Entry_date = Convert.ToDateTime(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")),
                 };
 
                 _context.Persons.Add(newPerson);

@@ -240,7 +240,8 @@ namespace Practise_project.Controllers
                 {
                     Invoice_item_id = maxId + 1,
                     Invoice_id = id,
-                    Entry_date = DateTime.Now, 
+                    Entry_date = DateTime.Now,
+                    Update_date = DateTime.Now,
                     Rowver = 1
                 };
                 isNewItem = true;

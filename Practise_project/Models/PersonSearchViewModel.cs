@@ -28,6 +28,8 @@ namespace Practise_project.Models
         public int? SearchAge { get; set; } 
         public bool IsSearched { get; set; } = false;
 
+        public DateTime EntryDate { get; set; }
+
 
         // --- ドロップダウンの選択肢 ---
         public List<SelectListItem> PersonTypeOptions { get; set; } = new();

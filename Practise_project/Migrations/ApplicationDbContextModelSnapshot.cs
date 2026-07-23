@@ -61,7 +61,7 @@ namespace Practise_project.Migrations
 
                     b.HasIndex("Create_person_id");
 
-                    b.ToTable("Invoice");
+                    b.ToTable("Invoice", (string)null);
                 });
 
             modelBuilder.Entity("Practise_project.Data.InvoiceItemEntitiy", b =>
@@ -97,7 +97,7 @@ namespace Practise_project.Migrations
 
                     b.HasIndex("Invoice_id");
 
-                    b.ToTable("Invoice_item");
+                    b.ToTable("Invoice_item", (string)null);
                 });
 
             modelBuilder.Entity("Practise_project.Data.PersonEntitiy", b =>
@@ -134,7 +134,7 @@ namespace Practise_project.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Persons");
+                    b.ToTable("Persons", (string)null);
                 });
 
             modelBuilder.Entity("Practise_project.Data.InvoiceEntity", b =>
