@@ -1,0 +1,19 @@
+<!--
+function changePics( path ,picname ,id ){
+	var folder =	path+"/";
+	if( id == 1){
+		document.home.src = folder+ picname;
+	}else if( id == 2){
+		document.rule.src = folder+ picname;
+	}else if( id == 3){
+		document.qa.src = folder+ picname;
+	}
+}
+
+//if (navigator.appVersion.indexOf('Mac',0) != -1) {
+//	document.write('<link rel="stylesheet" type="text/css" charset="Shift_JIS" href="/web_reserve/css/res_m.css" title="fontproperty">\n');
+//} else  {
+//	document.write('<link rel="stylesheet" type="text/css" charset="Shift_JIS" href="/web_reserve/css/res.css" title="fontproperty">\n');
+//}
+
+//-->
