@@ -240,8 +240,8 @@ namespace Practise_project.Controllers
                 {
                     Invoice_item_id = maxId + 1,
                     Invoice_id = id,
-                    Entry_date = DateTime.Now,
-                    Update_date = DateTime.Now,
+                    Entry_date = DateTime.SpecifyKind(DateTime.UtcNow, DateTimeKind.Utc),
+                    Update_date = DateTime.SpecifyKind(DateTime.UtcNow, DateTimeKind.Utc),
                     Rowver = 1
                 };
                 isNewItem = true;
@@ -412,9 +412,9 @@ namespace Practise_project.Controllers
                 Customer_name = model.Customer_name,
                 Total_amount = model.Total_amount,
                 Remarks = model.Remarks,
-                Entry_date = DateTime.Now,
+                Entry_date = DateTime.SpecifyKind(DateTime.UtcNow, DateTimeKind.Utc),
                 // Update_date は新規の場合、DateTime.Now を入れるか NULL（nullableの場合）にするか設計に合わせて変更してください
-                Update_date = DateTime.Now,
+                Update_date = DateTime.SpecifyKind(DateTime.UtcNow, DateTimeKind.Utc),
                 Rowver = 1
             };
 
