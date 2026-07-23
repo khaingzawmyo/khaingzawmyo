@@ -1,0 +1,190 @@
+﻿@* @page *@
+@model SchoolHomePage.Pages.IndexModel
+@{
+    ViewData["Title"] = "ホーム - サムライ日本語学校";
+}
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" />
+
+    <style>
+            .hero-section {
+                background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('https://picsum.photos/id/1018/1600/600') no-repeat center center;
+                background-size: cover;
+                color: #ffffff;
+                padding: 120px 0;
+            }
+
+            .feature-icon {
+                font-size: 2.5rem;
+                color: #0d6efd;
+            }
+
+            .card-img-top {
+                height: 200px;
+                object-fit: cover;
+            }
+    </style>
+</head>
+<body>
+
+    <!-- ヘッダー / ナビゲーションバー -->
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm sticky-top">
+            <div class="container">
+                <a class="navbar-brand fw-bold text-primary" asp-page="/Index">
+                    <i class="bi bi-book-half me-2"></i>One Of　The　Best Japanese　Language
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto me-3">
+                        <li class="nav-item"><a class="nav-link active" asp-page="/Index">ホーム</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#about">学校紹介</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#courses">コース案内</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#news">お知らせ</a></li>
+                    </ul>
+                    <a href="#contact" class="btn btn-primary rounded-pill px-4">お問い合わせ</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- ヒーローセクション（メインビジュアル） -->
+    <section class="hero-section text-center">
+        <div class="container">
+            <h1 class="display-4 fw-bold mb-3">夢をかなえる、日本語の未来へ。</h1>
+            <p class="lead mb-4">少人数制クラスと充実した生活サポートで、あなたの日本での第一歩を応援します。</p>
+            <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+                <a href="#courses" class="btn btn-primary btn-lg px-4 me-sm-3">コースを見る</a>
+                <a href="#contact" class="btn btn-outline-light btn-lg px-4">資料請求（無料）</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 学校の特徴 -->
+    <section id="about" class="py-5">
+        <div class="container py-4">
+            <div class="text-center mb-5">
+                <h2 class="fw-bold">当校の3つの特徴</h2>
+                <p class="text-muted">当校が選ばれる理由をご紹介します</p>
+            </div>
+            <div class="row g-4 text-center">
+                <div class="col-md-4">
+                    <div class="p-4 border rounded-3 bg-light h-100">
+                        <i class="bi bi-people-fill feature-icon mb-3"></i>
+                        <h4>少人数制の個別指導</h4>
+                        <p class="text-muted mb-0">1クラス最大15名。一人ひとりの習熟度やゴールに合わせた徹底的な指導を行います。</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="p-4 border rounded-3 bg-light h-100">
+                        <i class="bi bi-mortarboard-fill feature-icon mb-3"></i>
+                        <h4>高い進学・就職実績</h4>
+                        <p class="text-muted mb-0">JLPT（日本語能力試験）対策から、面接指導や履歴書の書き方までトータルサポート。</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="p-4 border rounded-3 bg-light h-100">
+                        <i class="bi bi-house-heart-fill feature-icon mb-3"></i>
+                        <h4>安心の生活サポート</h4>
+                        <p class="text-muted mb-0">住まい探し、各種手続き、アルバイト探しなど、日本での生活全般を多言語スタッフが支えます。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- コース案内 -->
+    <section id="courses" class="py-5 bg-light">
+        <div class="container py-4">
+            <div class="text-center mb-5">
+                <h2 class="fw-bold">コース案内</h2>
+                <p class="text-muted">目的や期間に応じた様々なコースを用意しています</p>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="card h-100 shadow-sm">
+                        <img src="~/shingaku.jpg" class="card-img-top" alt="進学コース">
+                        <div class="card-body">
+                            <h5 class="card-title fw-bold">JLPT(N1)</h5>
+                            <span class="badge bg-primary mb-2">1年6ヶ月〜2年</span>
+                            <p class="card-text text-muted">ဂျပန်နိုင်ငံရှိ တက္ကသိုလ်၊ ဘွဲ့လွန်ကျောင်းနှင့် သက်မွေးဝမ်းကျောင်းပညာသင်ကျောင်းများသို့ ပညာဆက်လက်သင်ယူရန် ရည်ရွယ်သည့် သင်တန်းဖြစ်ပါသည်။ EJU (ဂျပန်တက္ကသိုလ်ဝင်ခွင့်စာမေးပွဲ) ပြင်ဆင်မှုအပိုင်းကိုလည်း ပြည့်စုံစွာ သင်ကြားပေးပါသည်။</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card h-100 shadow-sm">
+                        <img src="~/images.jpg" class="card-img-top" alt="ビジネスコース">
+                        <div class="card-body">
+                            <h5 class="card-title fw-bold">JLPT(N5～N3)</h5>
+                            <span class="badge bg-success mb-2">1年</span>
+                            <p class="card-text text-muted">ဂျပန်နိုင်ငံတွင် အလုပ်အကိုင်ရှာဖွေရန် ရည်ရွယ်သူများအတွက်။ စီးပွားရေးဆိုင်ရာ အတွေ့အကြုံ၊ ကျင့်ဝတ်များနှင့် လက်တွေ့အသုံးချ စကားပြောစွမ်းရည်များကို ဆည်းပူးလေ့လာနိုင်ပါသည်။</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card h-100 shadow-sm">
+                        <img src="~/J1.png" class="card-img-top" alt="短期コース">
+                        <div class="card-body">
+                            <h5 class="card-title fw-bold">JLPT(N3～N2</h5>
+                            <span class="badge bg-warning text-dark mb-2">6ヶ月〜9ヶ月</span>
+                            <p class="card-text text-muted">ဂျပန်နိုင်ငံရှိ အဆင့်မြင့် သက်မွေးဝမ်းကျောင်းပညာသင်ကျောင်းများ၊ တက္ကသိုလ်များ စသည်တို့သို့ တက်ရောက်ရန် ရည်မှန်းထားသူများအတွက်။</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- お知らせ（Razorのデータ埋め込みを想定） -->
+    <section id="news" class="py-5">
+        <div class="container py-4">
+            <h2 class="fw-bold mb-4">お知らせ</h2>
+            <div class="list-group">
+                <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                    <div>
+                        <span class="badge bg-secondary me-2">2026.04.01</span>
+                        <span>2026年度 秋期生の募集を開始しました。</span>
+                    </div>
+                    <i class="bi bi-chevron-right"></i>
+                </a>
+                <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                    <div>
+                        <span class="badge bg-secondary me-2">2026.03.15</span>
+                        <span>オンライン学校説明会を開催します（要予約）。</span>
+                    </div>
+                    <i class="bi bi-chevron-right"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- フッター -->
+    <footer class="bg-dark text-white py-4">
+        <div class="container text-center text-md-start">
+            <div class="row">
+                <div class="col-md-6 mb-3 mb-md-0">
+                    <h5 class="fw-bold text-primary">サムライ日本語学校</h5>
+                    <p class="small text-muted mb-0">〒100-0001 東京都千代田区1-1-1<br>TEL: 03-1234-5678 | Email: info@example.com</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <p class="small text-muted mb-0">&copy; 2026 Samurai Japanese Language School. All Rights Reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
