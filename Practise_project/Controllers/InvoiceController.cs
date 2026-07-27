@@ -155,8 +155,8 @@ namespace Practise_project.Controllers
         public async Task<IActionResult> Edit(int id, InvoiceSearchViewModel model, string action)
         {
             // -----------------------------------------------------------------
-            // 1. 【Voidボタン（削除）】が押された場合の処理
-            //// -----------------------------------------------------------------
+            // 【Voidボタン（削除）】が押された場合の処理
+            //----------------------------------------------------------------- 
             if (action == "void")
             {
                 // 子（明細）データがあれば取得して削除
@@ -321,39 +321,7 @@ namespace Practise_project.Controllers
             // 「Edit.cshtml」を呼び出して表示する
             return View("Edit", model);
         }
-        // 2. 新規作成データをデータベースに保存する（Post）
-        //[HttpPost]
-        //public async Task<IActionResult> Create(InvoiceSearchViewModel model)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        // 画面のViewModelからデータベースのEntityクラス（例: Person）に詰め替えて保存
-        //        var newInvoice = new InvoiceEntity
-        //        {
-        //            Invoice_no = model.SearchInvoiceNo!,
-        //            Create_person_id = model.SearchCreatePersonId!.Value,
-        //            Customer_name = model.Customer_name!,
-        //            Remarks = model.Remarks!,
-        //            //Total_amount = model.Total_amount!,
-        //        };
-        //        if (newInvoice.Entry_date == default)
-        //        {
-        //            newInvoice.Entry_date = DateTime.Now;
-        //        }
-        //        newInvoice.Update_date = DateTime.Now;
-
-        //        _context.Invoice.Add(newInvoice);
-        //        await _context.SaveChangesAsync();
-
-        //        // 保存が終わったら検索一覧画面に戻る
-        //        return RedirectToAction(nameof(Search));
-        //    }
-
-        //    // 入力エラーがある場合は、選択肢を再セットして元の画面に戻す
-        //    await PopulateCreatePersonOptionsAsync(model);
-        //    ViewData["InvoiceItemId"] = 0;
-        //    return View("Edit", model);
-        //}
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(InvoiceSearchViewModel model)
@@ -397,16 +365,10 @@ namespace Practise_project.Controllers
                 return View("Edit", model);
             }
 
-            // 2. 親テーブル（Invoice）の新規ID採番（※DB側で自動採番(IDENTITY)でない場合）
-            int maxInvoiceId = await _context.Invoice.AnyAsync()
-                ? await _context.Invoice.MaxAsync(i => i.Invoice_id)
-                : 0;
-            int newInvoiceId = maxInvoiceId + 1;
-
             // 3. 親エンティティの生成
             var newInvoice = new InvoiceEntity // ※型名は実際のEntityクラス名に合わせて調整してください
             {
-                Invoice_id = newInvoiceId,
+                //Invoice_id = newInvoiceId,
                 Invoice_no = model.SearchInvoiceNo,
                 Create_person_id = model.SearchCreatePersonId!.Value,
                 Customer_name = model.Customer_name,
@@ -415,19 +377,15 @@ namespace Practise_project.Controllers
                 Entry_date = DateTime.SpecifyKind(DateTime.UtcNow, DateTimeKind.Utc),
                 // Update_date は新規の場合、DateTime.Now を入れるか NULL（nullableの場合）にするか設計に合わせて変更してください
                 Update_date = DateTime.SpecifyKind(DateTime.UtcNow, DateTimeKind.Utc),
-                Rowver = 1
+                Rowver = 1,
+                InvoiceItems = new List<InvoiceItemEntitiy>()
             };
-
-            // 4. 子テーブル（InvoiceItem）の新規ID採番
-            int maxItemId = await _context.Invoice_item.AnyAsync()
-                ? await _context.Invoice_item.MaxAsync(item => item.Invoice_item_id)
-                : 0;
-
+            
             // 5. 子エンティティの生成
             var newInvoiceItem = new InvoiceItemEntitiy
             {
-                Invoice_item_id = maxItemId + 1,
-                Invoice_id = newInvoiceId,
+                //Invoice_item_id = maxItemId + 1,
+                //Invoice_id = newInvoiceId,
                 Entry_date = DateTime.Now,
                 Update_date = DateTime.Now,
                 Rowver = 1
@@ -446,14 +404,30 @@ namespace Practise_project.Controllers
                 newInvoiceItem.Cost_amount = 0;
             }
 
-            // 6. データベースへ追加・保存
             try
             {
+                // 1. 親（Invoice）のナビゲーションプロパティ（リスト）に子を追加する
+                newInvoice.InvoiceItems.Add(newInvoiceItem);
+
+                // 2. DBコンテキストには親（Invoice）だけを追加する
                 _context.Invoice.Add(newInvoice);
-                _context.Invoice_item.Add(newInvoiceItem);
 
                 await _context.SaveChangesAsync();
             }
+            //catch (DbUpdateException ex)
+            //{
+            //    // DB固有の詳細なエラーメッセージ（制約違反など）を取得できます
+            //    var errorMessage = ex.InnerException?.Message ?? ex.Message;
+
+            //    // ここで errorMessage の中身をブレークポイント等で確認してください
+            //    throw;
+            //}
+            //catch (Exception ex)
+            //{
+            //    var errorMessage = ex.Message;
+            //    throw;
+            //}
+
             catch (Exception)
             {
                 // 必要に応じてログ出力やエラーハンドリング

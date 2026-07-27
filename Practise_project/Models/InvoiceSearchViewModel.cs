@@ -35,15 +35,11 @@ namespace Practise_project.Models
         public decimal? Revenue_amount { get; set; }
         public decimal? Cost_amount { get; set; }
 
-
-
         // --- ドロップダウンの選択肢 ---
         // ② Create Person のセレクトボックス用リスト
         public List<SelectListItem> CreatePersonOptions { get; set; } = new();
 
-
         // --- 検索結果 ---
-        // グリッドに表示する明細データの一覧
         public List<InvoiceSearchResultItem>? SearchResults { get; set; }
 
         public List<InvoiceItemInputModel> Details { get; set; } = new List<InvoiceItemInputModel>();
@@ -55,7 +51,7 @@ namespace Practise_project.Models
         public int InvoiceId { get; set; }
         public string? InvoiceNo { get; set; }
 
-        //ここに紐付いた作成者の名前（Shohei Ohtani など）が入ります
+        //ここに紐付いた作成者の名前が入ります
         public string? CreatePersonName { get; set; }
 
         // 画像の「Employee」などの区分を入れるプロパティ

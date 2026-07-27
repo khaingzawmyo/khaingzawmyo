@@ -17,7 +17,7 @@ namespace Practise_project.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "10.0.9")
+                .HasAnnotation("ProductVersion", "8.0.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -61,7 +61,7 @@ namespace Practise_project.Migrations
 
                     b.HasIndex("Create_person_id");
 
-                    b.ToTable("Invoice", (string)null);
+                    b.ToTable("Invoice");
                 });
 
             modelBuilder.Entity("Practise_project.Data.InvoiceItemEntitiy", b =>
@@ -97,7 +97,7 @@ namespace Practise_project.Migrations
 
                     b.HasIndex("Invoice_id");
 
-                    b.ToTable("Invoice_item", (string)null);
+                    b.ToTable("Invoice_item");
                 });
 
             modelBuilder.Entity("Practise_project.Data.PersonEntitiy", b =>
@@ -134,7 +134,7 @@ namespace Practise_project.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Persons", (string)null);
+                    b.ToTable("Persons");
                 });
 
             modelBuilder.Entity("Practise_project.Data.InvoiceEntity", b =>

@@ -3,6 +3,8 @@ using Practise_project.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// ここを追加します！
+builder.Services.AddRazorPages();
 // --- 【追加】ここから ---
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
@@ -27,12 +29,14 @@ app.UseRouting();
 
 app.UseAuthorization();
 
-app.MapStaticAssets();
+app.UseStaticFiles();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}")
-    .WithStaticAssets();
+    pattern: "{controller=Home}/{action=Index}/{id?}");
+    app.MapRazorPages();
 
 
+//  MapRazorPages 正常に動くようになります
+app.MapRazorPages();
 app.Run();
